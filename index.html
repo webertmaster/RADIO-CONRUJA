@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rádio ao Vivo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #f8fafc; color: #1e293b; padding-bottom: 100px; min-height: 100vh; }
+
+        /* HEADER SIMPLIFICADO */
+        .header { 
+            background: white; 
+            padding: 25px 40px; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header h1 { 
+            font-size: 24px; 
+            color: #0f172a;
+            font-weight: 700;
+        }
+        .header h1 span { color: #3b82f6; }
+
+        /* CONTEÚDO */
+        .content { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+
+        /* PÁGINA RÁDIO AO VIVO */
+        .radio-page h2 { font-size: 32px; margin-bottom: 10px; color: #0f172a; }
+        .radio-page .subtitle { color: #64748b; margin-bottom: 30px; font-size: 16px; }
+
+        .radio-controls { 
+            background: white;
+            padding: 25px; 
+            border-radius: 12px; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .radio-controls label { font-weight: 600; color: #0f172a; font-size: 16px; }
+        #state-select { 
+            padding: 12px 20px; 
+            font-size: 16px; 
+            border-radius: 8px; 
+            border: 2px solid #e2e8f0; 
+            background: white; 
+            cursor: pointer; 
+            outline: none;
+            transition: all 0.2s;
+            min-width: 250px;
+        }
+        #state-select:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+
+        .radio-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+        .radio-item { 
+            background: white; 
+            border: 2px solid #e2e8f0; 
+            padding: 20px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .radio-item:hover { 
+            border-color: #3b82f6; 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 16px rgba(59, 130, 246, 0.1);
+        }
+        .radio-item.playing { 
+            background: #eff6ff; 
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .radio-item .radio-icon { 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 10px; 
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .radio-item .radio-info { flex: 1; min-width: 0; }
+        .radio-item h3 { font-size: 16px; color: #0f172a; margin-bottom: 4px; font-weight: 600; }
+        .radio-item p { font-size: 13px; color: #64748b; }
+        .loading-text { text-align: center; color: #64748b; padding: 40px 20px; font-size: 16px; }
+
+        /* PLAYER MINI DISCRETO */
+        .player-bar { 
+            position: fixed; 
+            bottom: 20px; 
+            left: 50%; 
+            transform: translateX(-50%) translateY(150%); 
+            width: 90%; 
+            max-width: 500px; 
+            height: 70px;
+            background: white;
+            color: #0f172a; 
+            padding: 0 20px; 
+            border-radius: 16px;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
+            z-index: 1000; 
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .player-bar.visible { transform: translateX(-50%) translateY(0); }
+        
+        .station-logo-container { 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 12px; 
+            background: #f1f5f9;
+            margin-right: 15px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            overflow: hidden; 
+            position: relative; 
+            flex-shrink: 0;
+            font-size: 24px;
+        }
+        .station-logo { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            position: absolute; 
+            top: 0; 
+            left: 0;
+            border-radius: 12px;
+        }
+        .station-logo.hidden { display: none; }
+
+        .player-info { display: flex; align-items: center; flex: 1; min-width: 0; }
+        .player-info .details { min-width: 0; }
+        .player-info .details h4 { 
+            font-size: 15px; 
+            margin-bottom: 2px; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            max-width: 180px;
+            font-weight: 600;
+        }
+        .player-info .details span { 
+            font-size: 12px; 
+            color: #64748b; 
+            background: #f1f5f9; 
+            padding: 3px 10px; 
+            border-radius: 12px;
+            font-weight: 500;
+        }
+        
+        .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 30px; margin: 0 20px; }
+        .visualizer span {
+            width: 4px; 
+            background: linear-gradient(to top, #3b82f6, #8b5cf6); 
+            border-radius: 2px;
+            height: 10%; 
+            transition: height 0.1s;
+        }
+        .visualizer.playing span { animation: eq-bass 1s infinite ease-in-out alternate; }
+        .visualizer span:nth-child(1) { animation-duration: 0.7s; }
+        .visualizer span:nth-child(2) { animation-duration: 1.1s; animation-delay: 0.1s; }
+        .visualizer span:nth-child(3) { animation-duration: 0.9s; animation-delay: 0.3s; }
+        .visualizer span:nth-child(4) { animation-duration: 1.3s; animation-delay: 0.2s; }
+        .visualizer span:nth-child(5) { animation-duration: 0.8s; animation-delay: 0.4s; }
+
+        @keyframes eq-bass {
+            0% { height: 15%; }
+            100% { height: 100%; }
+        }
+
+        .btn-play { 
+            background: #3b82f6; 
+            color: white; 
+            border: none; 
+            width: 45px; 
+            height: 45px; 
+            border-radius: 50%; 
+            font-size: 18px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: all 0.2s; 
+            font-weight: bold; 
+            flex-shrink: 0;
+        }
+        .btn-play:hover { background: #2563eb; transform: scale(1.05); }
+        .btn-play:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>📻 Rádio<span> Conruja ao Vivo</span></h1>
+    </header>
+
+    <main class="content">
+        <section class="radio-page">
+            <h2>Rádios do Brasil</h2>
+            <p class="subtitle">Escolha seu estado e ouça as rádios locais</p>
+
+            <div class="radio-controls">
+                <label for="state-select">Estado:</label>
+                <select id="state-select">
+                    <option value="">Selecione um estado...</option>
+                </select>
+            </div>
+
+            <div id="radio-list" class="radio-list">
+                <p class="loading-text">Selecione um estado para ver as rádios disponíveis.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer id="radio-player" class="player-bar">
+        <div class="player-info">
+            <div class="station-logo-container">
+                <span>📻</span>
+                <img id="station-logo" src="" alt="Logo" class="station-logo hidden">
+            </div>
+            <div class="details">
+                <h4 id="station-name">Nenhuma rádio</h4>
+                <span id="station-state">--</span>
+            </div>
+        </div>
+        
+        <div class="visualizer" id="visualizer">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <button id="btn-play" class="btn-play">▶</button>
+        <audio id="audio-element"></audio>
+    </footer>
+
+    <script>
+        // PLAYER E VISUALIZADOR
+        const audioElement = document.getElementById('audio-element');
+        const playerBar = document.getElementById('radio-player');
+        const stationNameEl = document.getElementById('station-name');
+        const stationStateEl = document.getElementById('station-state');
+        const stationLogoEl = document.getElementById('station-logo');
+        const btnPlay = document.getElementById('btn-play');
+        const visualizer = document.getElementById('visualizer');
+
+        let currentStationUuid = null;
+
+        function playStation(station) {
+            playerBar.classList.add('visible');
+            stationNameEl.textContent = station.name;
+            stationStateEl.textContent = station.state;
+            currentStationUuid = station.stationuuid;
+            
+            if (station.favicon && station.favicon.trim() !== '') {
+                stationLogoEl.src = station.favicon;
+                stationLogoEl.classList.remove('hidden');
+                stationLogoEl.onerror = () => stationLogoEl.classList.add('hidden');
+            } else {
+                stationLogoEl.classList.add('hidden');
+            }
+
+            document.querySelectorAll('.radio-item').forEach(item => {
+                item.classList.toggle('playing', item.dataset.uuid === station.stationuuid);
+            });
+
+            audioElement.src = station.url_resolved;
+            audioElement.play().catch(err => {
+                console.warn("Autoplay bloqueado.", err);
+                btnPlay.textContent = '▶';
+                visualizer.classList.remove('playing');
+            });
+            
+            btnPlay.textContent = '⏸';
+            visualizer.classList.add('playing');
+        }
+
+        btnPlay.addEventListener('click', () => {
+            if (audioElement.paused) {
+                audioElement.play();
+                btnPlay.textContent = '⏸';
+                visualizer.classList.add('playing');
+            } else {
+                audioElement.pause();
+                btnPlay.textContent = '▶';
+                visualizer.classList.remove('playing');
+            }
+        });
+
+        // BUSCA DE RÁDIOS
+        const stateSelect = document.getElementById('state-select');
+        const radioList = document.getElementById('radio-list');
+
+        const estadosBR = [
+            'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 
+            'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão', 
+            'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 
+            'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro', 
+            'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 
+            'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins'
+        ];
+
+        estadosBR.forEach(uf => {
+            const opt = document.createElement('option');
+            opt.value = uf; 
+            opt.textContent = uf;
+            stateSelect.appendChild(opt);
+        });
+
+        stateSelect.addEventListener('change', async (e) => {
+            const estado = e.target.value;
+            if (!estado) return;
+
+            radioList.innerHTML = '<p class="loading-text">Buscando rádios em ' + estado + '...</p>';
+
+            try {
+                const url = `https://de1.api.radio-browser.info/json/stations/search?countrycode=BR&state=${encodeURIComponent(estado)}&limit=100&order=clickcount&reverse=true&hidebroken=true`;
+                const response = await fetch(url);
+                const stations = await response.json();
+
+                if (stations.length === 0) {
+                    radioList.innerHTML = '<p class="loading-text">Nenhuma rádio encontrada para este estado.</p>';
+                    return;
+                }
+
+                radioList.innerHTML = '';
+                stations.forEach(station => {
+                    const div = document.createElement('div');
+                    div.className = 'radio-item';
+                    if (station.stationuuid === currentStationUuid) div.classList.add('playing');
+                    div.dataset.uuid = station.stationuuid;
+                    
+                    div.innerHTML = `
+                        <div class="radio-icon">📻</div>
+                        <div class="radio-info">
+                            <h3>${station.name}</h3>
+                            <p>${station.city || 'Cidade não informada'} • ${station.tags ? station.tags.split(',')[0] : 'Geral'}</p>
+                        </div>
+                    `;
+                    
+                    div.addEventListener('click', () => playStation(station));
+                    radioList.appendChild(div);
+                });
+            } catch (error) {
+                radioList.innerHTML = '<p class="loading-text" style="color:red">Erro ao buscar rádios. Verifique sua conexão.</p>';
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>
