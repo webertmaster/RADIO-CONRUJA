@@ -179,6 +179,81 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
+        /* CARD EXPANSÍVEL DO IFRAME */
+        .iframe-expander {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
+            display: none;
+        }
+        .iframe-expander.visible {
+            display: block;
+            animation: slideDown 0.4s ease;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .iframe-expander-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .iframe-expander-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #92400e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .iframe-expander-subtitle {
+            font-size: 13px;
+            color: #a16207;
+            margin-top: 3px;
+        }
+        .btn-toggle-iframe {
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-toggle-iframe:hover {
+            background: #d97706;
+            transform: scale(1.05);
+        }
+        .iframe-container {
+            display: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background: white;
+            margin-top: 15px;
+        }
+        .iframe-container.visible {
+            display: block;
+        }
+        .iframe-container iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            display: block;
+        }
+
         /* GRID DE RÁDIOS */
         .radio-grid { 
             display: grid; 
@@ -259,20 +334,6 @@
             top: 10px;
             right: 10px;
             background: #ef4444;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            z-index: 3;
-        }
-        .manual-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: #10b981;
             color: white;
             padding: 4px 10px;
             border-radius: 12px;
@@ -489,84 +550,33 @@
 
         /* RESPONSIVO MOBILE */
         @media (max-width: 768px) {
-            .header {
-                padding: 15px;
-            }
-            .header h1 {
-                font-size: 18px;
-            }
-            .header-live {
-                font-size: 10px;
-                padding: 5px 10px;
-            }
-            .hero-banner {
-                padding: 25px 15px;
-            }
-            .hero-banner h2 {
-                font-size: 22px;
-            }
-            .hero-banner p {
-                font-size: 14px;
-            }
-            .search-box {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 10px;
-            }
-            .search-box select, .search-box input {
-                width: 100%;
-            }
-            .radio-grid {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-                gap: 12px;
-            }
-            .radio-card-header {
-                padding: 20px 15px;
-            }
-            .radio-card-logo {
-                width: 60px;
-                height: 60px;
-                font-size: 30px;
-            }
-            .radio-card h3 {
-                font-size: 14px;
-            }
-            .section-title {
-                font-size: 18px;
-            }
-            .visualizer {
-                display: none;
-            }
-            .volume-slider {
-                display: none;
-            }
-            .player-bar {
-                width: calc(100% - 20px);
-                padding: 10px 14px;
-                min-height: 65px;
-            }
-            .station-logo-container {
-                width: 40px;
-                height: 40px;
-            }
-            .player-details h4 {
-                font-size: 13px;
-            }
-            .btn-play {
-                width: 38px;
-                height: 38px;
-                font-size: 14px;
-            }
+            .header { padding: 15px; }
+            .header h1 { font-size: 18px; }
+            .header-live { font-size: 10px; padding: 5px 10px; }
+            .hero-banner { padding: 25px 15px; }
+            .hero-banner h2 { font-size: 22px; }
+            .hero-banner p { font-size: 14px; }
+            .search-box { flex-direction: column; align-items: stretch; gap: 10px; }
+            .search-box select, .search-box input { width: 100%; }
+            .radio-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+            .radio-card-header { padding: 20px 15px; }
+            .radio-card-logo { width: 60px; height: 60px; font-size: 30px; }
+            .radio-card h3 { font-size: 14px; }
+            .section-title { font-size: 18px; }
+            .visualizer { display: none; }
+            .volume-slider { display: none; }
+            .player-bar { width: calc(100% - 20px); padding: 10px 14px; min-height: 65px; }
+            .station-logo-container { width: 40px; height: 40px; }
+            .player-details h4 { font-size: 13px; }
+            .btn-play { width: 38px; height: 38px; font-size: 14px; }
+            
+            .iframe-container iframe { height: 500px; }
+            .iframe-expander-title { font-size: 16px; }
         }
 
         @media (max-width: 480px) {
-            .radio-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .section-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+            .radio-grid { grid-template-columns: repeat(2, 1fr); }
+            .section-header { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
@@ -598,6 +608,31 @@
     </div>
 
     <main class="content">
+        <!-- BLOCO DO IFRAME (aparece apenas para RN) -->
+        <div id="iframe-expander" class="iframe-expander">
+            <div class="iframe-expander-header">
+                <div>
+                    <div class="iframe-expander-title">
+                        📻 Rádios extras do Rio Grande do Norte
+                    </div>
+                    <div class="iframe-expander-subtitle">
+                        Centenas de rádios locais via Radio ao Vivo
+                    </div>
+                </div>
+                <button class="btn-toggle-iframe" id="btn-toggle-iframe">
+                    <span id="btn-toggle-text">▶ Ver rádios</span>
+                </button>
+            </div>
+            <div class="iframe-container" id="iframe-container">
+                <iframe 
+                    id="rn-iframe"
+                    src="" 
+                    loading="lazy"
+                    allow="autoplay; encrypted-media">
+                </iframe>
+            </div>
+        </div>
+
         <div class="section-header">
             <h2 class="section-title">Estações Disponíveis</h2>
             <div class="station-count" id="station-count">0 rádios</div>
@@ -610,7 +645,7 @@
     <footer id="radio-player" class="player-bar">
         <div class="player-info">
             <div class="station-logo-container">
-                <span>📻</span>
+                <span></span>
                 <img id="station-logo" src="" alt="Logo" class="station-logo hidden">
             </div>
             <div class="player-details">
@@ -634,80 +669,7 @@
 
     <script>
         // ============================================
-        // RÁDIOS MANUAIS (Adicione as URLs reais aqui)
-        // ============================================
-        const radiosManuais = {
-            'Rio Grande do Norte': [
-                {
-                    name: "Interativa FM 94.1",
-                    city: "Natal",
-                    tags: "pop, hits, dance",
-                    url_resolved: "https://stream.interativafm.com.br/radio/8000/radio.mp3",
-                    favicon: "",
-                    stationuuid: "manual-rn-1"
-                },
-                {
-                    name: "96 FM Natal",
-                    city: "Natal",
-                    tags: "pop, rock, hits",
-                    url_resolved: "https://stream.96fm.com.br/radio.mp3",
-                    favicon: "",
-                    stationuuid: "manual-rn-2"
-                },
-                {
-                    name: "Rádio Cidade FM 103.3",
-                    city: "Natal",
-                    tags: "rock, pop rock",
-                    url_resolved: "https://stream.radiocidade.com.br/radio.mp3",
-                    favicon: "",
-                    stationuuid: "manual-rn-3"
-                },
-                {
-                    name: "Tropical FM 101.7",
-                    city: "Natal",
-                    tags: "forró, axé, popular",
-                    url_resolved: "https://stream.tropicalfm.com.br/radio.mp3",
-                    favicon: "",
-                    stationuuid: "manual-rn-4"
-                },
-                {
-                    name: "Rádio Potiguar 95.5",
-                    city: "Natal",
-                    tags: "notícias, talk, jornalismo",
-                    url_resolved: "https://stream.radiopotiguar.com.br/radio.mp3",
-                    favicon: "",
-                    stationuuid: "manual-rn-5"
-                },
-                {
-                    name: "Band FM Natal 99.1",
-                    city: "Natal",
-                    tags: "pop, rock, nacional",
-                    url_resolved: "https://stream.bandfm.com.br/natal/radio.mp3",
-                    favicon: "",
-                    stationuuid: "manual-rn-6"
-                },
-                {
-                    name: "Rádio Mossoró 96.5",
-                    city: "Mossoró",
-                    tags: "popular, regional",
-                    url_resolved: "https://stream.radiomossoro.com.br/radio.mp3",
-                    favicon: "",
-                    stationuuid: "manual-rn-7"
-                },
-                {
-                    name: "Jovem Pan FM Natal 100.9",
-                    city: "Natal",
-                    tags: "pop, jovem, hits",
-                    url_resolved: "https://stream.jovempan.com.br/natal/radio.mp3",
-                    favicon: "",
-                    stationuuid: "manual-rn-8"
-                }
-            ]
-            // Adicione mais estados aqui se quiser
-        };
-
-        // ============================================
-        // ELEMENTOS E VARIÁVEIS
+        // ELEMENTOS
         // ============================================
         const audioElement = document.getElementById('audio-element');
         const playerBar = document.getElementById('radio-player');
@@ -722,9 +684,17 @@
         const radioList = document.getElementById('radio-list');
         const searchInput = document.getElementById('search-input');
         const stationCountEl = document.getElementById('station-count');
+        
+        // Elementos do iframe
+        const iframeExpander = document.getElementById('iframe-expander');
+        const iframeContainer = document.getElementById('iframe-container');
+        const rnIframe = document.getElementById('rn-iframe');
+        const btnToggleIframe = document.getElementById('btn-toggle-iframe');
+        const btnToggleText = document.getElementById('btn-toggle-text');
 
         let currentStationUuid = null;
         let currentStations = [];
+        let iframeOpen = false;
 
         // ============================================
         // CONTROLE DE VOLUME
@@ -762,6 +732,26 @@
         });
 
         // ============================================
+        // TOGGLE DO IFRAME
+        // ============================================
+        btnToggleIframe.addEventListener('click', () => {
+            iframeOpen = !iframeOpen;
+            
+            if (iframeOpen) {
+                iframeContainer.classList.add('visible');
+                btnToggleText.textContent = '✕ Fechar rádios';
+                
+                // Carrega o iframe só quando abrir (lazy load)
+                if (!rnIframe.src) {
+                    rnIframe.src = 'https://www.radio-ao-vivo.com/radio/rio-grande-do-norte';
+                }
+            } else {
+                iframeContainer.classList.remove('visible');
+                btnToggleText.textContent = '▶ Ver rádios';
+            }
+        });
+
+        // ============================================
         // PLAY STATION
         // ============================================
         function playStation(station) {
@@ -787,7 +777,6 @@
                 console.warn("Autoplay bloqueado ou stream offline.", err);
                 btnPlay.textContent = '▶';
                 visualizer.classList.remove('playing');
-                alert('⚠️ Esta rádio pode estar offline. Tente outra.');
             });
             
             btnPlay.textContent = '⏸';
@@ -826,10 +815,18 @@
         });
 
         // ============================================
-        // BUSCAR RÁDIOS (API + MANUAIS)
+        // BUSCAR RÁDIOS
         // ============================================
         stateSelect.addEventListener('change', async (e) => {
             const estado = e.target.value;
+            
+            // Esconde o iframe por padrão
+            iframeExpander.classList.remove('visible');
+            iframeContainer.classList.remove('visible');
+            iframeOpen = false;
+            btnToggleText.textContent = '▶ Ver rádios';
+            rnIframe.src = ''; // Reseta o iframe
+            
             if (!estado) {
                 radioList.innerHTML = '<p class="loading-text">📻 Selecione um estado para ver as rádios</p>';
                 stationCountEl.textContent = '0 rádios';
@@ -840,31 +837,24 @@
             stationCountEl.textContent = 'Buscando...';
 
             try {
-                let allStations = [];
-
-                // Busca da API
                 const url = `https://de1.api.radio-browser.info/json/stations/search?countrycode=BR&state=${encodeURIComponent(estado)}&limit=500&order=clickcount&reverse=true`;
                 const response = await fetch(url);
-                const apiStations = await response.json();
-                
-                allStations = [...apiStations];
+                const stations = await response.json();
 
-                // Adiciona rádios manuais se existirem para este estado
-                if (radiosManuais[estado]) {
-                    const apiNames = apiStations.map(s => s.name.toLowerCase());
-                    const manualToAdd = radiosManuais[estado].filter(r => !apiNames.includes(r.name.toLowerCase()));
-                    allStations = [...manualToAdd, ...allStations]; // Manuais primeiro
-                }
+                currentStations = stations;
 
-                currentStations = allStations;
-
-                if (allStations.length === 0) {
+                if (stations.length === 0) {
                     radioList.innerHTML = '<p class="loading-text">😕 Nenhuma rádio encontrada.</p>';
                     stationCountEl.textContent = '0 rádios';
                     return;
                 }
 
-                renderStations(allStations);
+                renderStations(stations);
+
+                // MOSTRA O IFRAME APENAS PARA O RN
+                if (estado === 'Rio Grande do Norte') {
+                    iframeExpander.classList.add('visible');
+                }
             } catch (error) {
                 radioList.innerHTML = '<p class="loading-text" style="color:red">❌ Erro ao buscar. Tente novamente.</p>';
                 stationCountEl.textContent = 'Erro';
@@ -898,18 +888,8 @@
             radioList.innerHTML = '';
             stationCountEl.textContent = `${stations.length} rádio${stations.length !== 1 ? 's' : ''}`;
             
-            let workingCount = 0;
-            let offlineCount = 0;
-            let manualCount = 0;
-            
             stations.forEach(station => {
                 const hasUrl = station.url_resolved && station.url_resolved.trim() !== '';
-                const isManual = station.stationuuid && station.stationuuid.startsWith('manual-');
-                
-                if (hasUrl) workingCount++;
-                else offlineCount++;
-                
-                if (isManual) manualCount++;
                 
                 const div = document.createElement('div');
                 div.className = 'radio-card';
@@ -920,7 +900,6 @@
                 const city = station.city || 'Cidade não informada';
                 const genre = station.tags ? station.tags.split(',')[0] : 'Geral';
                 
-                // Logo
                 let logoHTML = '';
                 if (station.favicon && station.favicon.trim() !== '') {
                     logoHTML = `<img src="${station.favicon}" alt="" onerror="this.parentElement.innerHTML=''">`;
@@ -929,9 +908,8 @@
                 div.innerHTML = `
                     <div class="radio-card-header">
                         ${!hasUrl ? '<div class="offline-badge">Offline</div>' : ''}
-                        ${isManual ? '<div class="manual-badge">⭐ Manual</div>' : ''}
                         <div class="radio-card-logo">
-                            ${logoHTML || '📻'}
+                            ${logoHTML || ''}
                         </div>
                     </div>
                     <div class="radio-card-body">
@@ -947,20 +925,6 @@
                 
                 radioList.appendChild(div);
             });
-            
-            // Info sobre offline e manuais
-            if (offlineCount > 0 || manualCount > 0) {
-                const info = document.createElement('p');
-                info.className = 'loading-text';
-                info.style.fontSize = '13px';
-                info.style.marginTop = '20px';
-                info.style.gridColumn = '1 / -1';
-                let infoText = `ℹ️ ${workingCount} funcionando`;
-                if (offlineCount > 0) infoText += ` • ${offlineCount} podem estar offline`;
-                if (manualCount > 0) infoText += ` • ${manualCount} adicionadas manualmente`;
-                info.innerHTML = infoText;
-                radioList.appendChild(info);
-            }
         }
     </script>
 </body>
