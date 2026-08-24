@@ -5,350 +5,211 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conruja Rádio ao Vivo</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-        body { background: linear-gradient(180deg, #f0f4f8 0%, #d9e2ec 100%); padding-bottom: 100px; }
+        :root {
+            --bg: #f4f6fa;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #8a94a6;
+            --border: #e8edf4;
+            --accent: #dc2626;
+        }
+        body.dark {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+            --border: #334155;
+        }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        body { background: var(--bg); padding-bottom: 110px; transition: background 0.3s; }
+
+        /* HEADER */
         .header { 
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-            padding: 20px; box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3);
+            background: var(--card);
+            padding: 15px 25px; 
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
             display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100;
+            border-bottom: 1px solid var(--border);
         }
         .header-left { display: flex; align-items: center; gap: 12px; }
         .header-logo {
-            width: 45px; height: 45px; border-radius: 50%; background: white;
+            width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #dc2626, #f59e0b);
             display: flex; align-items: center; justify-content: center; overflow: hidden;
+            padding: 3px;
         }
-        .header-logo img { width: 100%; height: 100%; object-fit: cover; animation: dance 2s infinite; }
+        .header-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; animation: dance 2s infinite; }
         @keyframes dance { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
-        .header h1 { font-size: 22px; color: white; font-weight: 700; }
-        .header h1 span { color: #fbbf24; }
+        .header h1 { font-size: 20px; color: var(--text); font-weight: 800; }
+        .header h1 span { color: var(--accent); }
 
-        .content { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
-        
-        .search-box {
-            background: white; padding: 20px; border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 30px;
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .live-badge {
+            background: var(--accent); color: white; padding: 5px 12px; border-radius: 20px;
+            font-size: 11px; font-weight: 700; letter-spacing: 1px; animation: pulse 2s infinite;
         }
-        .search-box label { font-weight: 600; margin-bottom: 10px; display: block; color: #1e293b; font-size: 15px; }
-        .search-box select, .search-box input {
-            width: 100%; padding: 14px; font-size: 16px; border: 2px solid #e2e8f0;
-            border-radius: 12px; outline: none; margin-bottom: 10px; transition: all 0.2s;
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        .theme-toggle {
+            background: var(--bg); border: 1px solid var(--border); width: 38px; height: 38px;
+            border-radius: 50%; cursor: pointer; font-size: 16px; transition: all 0.2s;
         }
-        .search-box select:focus, .search-box input:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
+        .theme-toggle:hover { transform: scale(1.1); }
+
+        .content { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+
+        /* TOOLBAR */
+        .toolbar {
+            background: var(--card); padding: 18px; border-radius: 14px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 25px;
+            display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+            border: 1px solid var(--border);
+        }
+        .toolbar select, .toolbar input {
+            padding: 12px 16px; font-size: 15px; border: 1px solid var(--border);
+            border-radius: 10px; outline: none; background: var(--bg); color: var(--text);
+            transition: all 0.2s;
+        }
+        .toolbar select { min-width: 240px; cursor: pointer; font-weight: 600; }
+        .toolbar input { flex: 1; min-width: 200px; }
+        .toolbar select:focus, .toolbar input:focus { border-color: var(--accent); }
 
         .section-header {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 25px; flex-wrap: wrap; gap: 10px;
+            margin-bottom: 18px; flex-wrap: wrap; gap: 10px;
         }
-        .section-title { font-size: 24px; color: #1e293b; font-weight: 700; }
+        .section-title { font-size: 20px; color: var(--text); font-weight: 700; }
         .station-count {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            color: white; padding: 8px 16px; border-radius: 20px;
-            font-size: 13px; font-weight: 600; box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+            background: var(--card); border: 1px solid var(--border);
+            color: var(--muted); padding: 6px 14px; border-radius: 20px;
+            font-size: 13px; font-weight: 600;
         }
 
+        /* GRID ESTILO RADIO-AO-VIVO */
         .radio-grid { 
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-            gap: 20px; margin-bottom: 40px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 14px; margin-bottom: 40px;
         }
         
-        /* CARD DESIGN MODERNO E BONITO */
         .radio-card { 
-            background: white; 
-            border-radius: 20px; 
-            overflow: hidden; 
+            background: var(--card); 
+            border-radius: 14px; 
+            padding: 14px;
+            display: flex; 
+            align-items: center; 
+            gap: 14px;
             cursor: pointer; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border: 2px solid transparent;
+            transition: all 0.2s;
+            border: 1px solid var(--border);
             position: relative;
         }
         .radio-card:hover { 
-            transform: translateY(-8px); 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15); 
-            border-color: #3b82f6;
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
+            border-color: var(--accent);
         }
         .radio-card.playing { 
-            border-color: #dc2626; 
-            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.2), 0 20px 40px rgba(0,0,0,0.15);
-        }
-        
-        .radio-card-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 35px 25px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .radio-card-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: pulse-glow 3s ease-in-out infinite;
-        }
-        @keyframes pulse-glow {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
+            border-color: var(--accent); 
+            background: linear-gradient(135deg, rgba(220,38,38,0.05), rgba(220,38,38,0.02));
         }
         
         .radio-card-logo {
-            width: 90px; 
-            height: 90px; 
-            border-radius: 50%; 
-            background: white;
-            margin: 0 auto 15px;
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            font-size: 40px; 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
-            position: relative;
-            z-index: 1;
-            overflow: hidden;
-            border: 4px solid rgba(255,255,255,0.3);
+            width: 54px; height: 54px; border-radius: 12px; 
+            background: var(--bg);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 26px; overflow: hidden; flex-shrink: 0;
+            border: 1px solid var(--border);
         }
-        .radio-card-logo img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            border-radius: 50%; 
-        }
+        .radio-card-logo img { width: 100%; height: 100%; object-fit: cover; }
         
-        .radio-card.playing .radio-card-logo::after {
-            content: ''; 
-            position: absolute; 
-            top: -5px; 
-            right: -5px; 
-            width: 25px; 
-            height: 25px;
-            background: linear-gradient(135deg, #ef4444, #dc2626); 
-            border-radius: 50%; 
-            animation: blink 1s infinite; 
-            z-index: 2; 
-            border: 3px solid white;
-            box-shadow: 0 2px 10px rgba(220, 38, 38, 0.4);
+        .radio-card-info { flex: 1; min-width: 0; }
+        .radio-card-info h3 { 
+            font-size: 15px; color: var(--text); font-weight: 700; 
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            margin-bottom: 3px;
         }
-        @keyframes blink { 
-            0%, 100% { opacity: 1; transform: scale(1); } 
-            50% { opacity: 0.6; transform: scale(0.9); } 
+        .radio-card-info p { 
+            font-size: 12px; color: var(--muted);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .web-badge {
+            display: inline-block; background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: white; padding: 2px 8px; border-radius: 8px;
+            font-size: 9px; font-weight: 700; letter-spacing: 0.5px; margin-left: 6px;
+            vertical-align: middle;
         }
 
-        .radio-card-body { 
-            padding: 20px; 
-            background: white;
-        }
-        .radio-card h3 { 
-            font-size: 17px; 
-            color: #1e293b; 
-            margin-bottom: 8px; 
-            font-weight: 700; 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis;
-        }
-        .radio-card .location { 
-            font-size: 13px; 
-            color: #64748b; 
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .radio-card .genre {
-            display: inline-block; 
-            background: linear-gradient(135deg, #eff6ff, #dbeafe); 
-            color: #3b82f6; 
-            padding: 6px 14px;
-            border-radius: 12px; 
-            font-size: 12px; 
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .radio-card.playing .genre { 
-            background: linear-gradient(135deg, #fef2f2, #fee2e2); 
-            color: #dc2626; 
-        }
-        
-        .loading-text { 
-            text-align: center; 
-            color: #64748b; 
-            padding: 40px 20px; 
-            font-size: 16px;
-            grid-column: 1 / -1;
-        }
+        /* Mini equalizador no card quando tocando */
+        .card-eq { display: none; gap: 2px; align-items: flex-end; height: 18px; flex-shrink: 0; }
+        .radio-card.playing .card-eq { display: flex; }
+        .card-eq span { width: 3px; background: var(--accent); border-radius: 2px; animation: eq-bass 0.8s infinite ease-in-out alternate; }
+        .card-eq span:nth-child(1) { animation-duration: 0.6s; }
+        .card-eq span:nth-child(2) { animation-duration: 0.9s; animation-delay: 0.1s; }
+        .card-eq span:nth-child(3) { animation-duration: 0.7s; animation-delay: 0.2s; }
 
-        /* PLAYER COMPACTO */
+        .play-hint {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: var(--accent); color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; flex-shrink: 0; opacity: 0; transition: opacity 0.2s;
+        }
+        .radio-card:hover .play-hint { opacity: 1; }
+        .radio-card.playing .play-hint { opacity: 1; }
+
+        @keyframes eq-bass { 0% { height: 20%; } 100% { height: 100%; } }
+
+        .loading-text { text-align: center; color: var(--muted); padding: 40px 20px; font-size: 15px; grid-column: 1 / -1; }
+
+        /* PLAYER COMPACTO (o que você gostou) */
         .player-bar { 
-            position: fixed; 
-            bottom: 15px; 
-            left: 50%; 
+            position: fixed; bottom: 15px; left: 50%; 
             transform: translateX(-50%) translateY(150%); 
-            width: 90%; 
-            max-width: 450px; 
-            height: 65px;
+            width: 90%; max-width: 450px; height: 65px;
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            color: white; 
-            padding: 0 20px; 
-            border-radius: 16px;
-            display: flex; 
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3); 
-            z-index: 1000; 
+            color: white; padding: 0 20px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: space-between; gap: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 1000; 
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .player-bar.visible { transform: translateX(-50%) translateY(0); }
-
-        .player-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1;
-            min-width: 0;
-        }
-        
+        .player-left { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
         .station-logo-container { 
-            width: 45px; 
-            height: 45px; 
-            border-radius: 12px; 
-            background: rgba(255,255,255,0.1);
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            overflow: hidden; 
-            position: relative; 
-            flex-shrink: 0;
+            width: 45px; height: 45px; border-radius: 12px; background: rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center; overflow: hidden; 
+            position: relative; flex-shrink: 0;
         }
-        .station-logo { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            position: absolute; 
-            top: 0; 
-            left: 0;
-            border-radius: 12px;
-        }
+        .station-logo { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; border-radius: 12px; }
         .station-logo.hidden { display: none; }
-
-        .player-info { 
-            min-width: 0;
-            flex: 1;
-        }
-        .player-info h4 { 
-            font-size: 14px; 
-            margin-bottom: 2px; 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis;
-            font-weight: 600;
-            color: white;
-        }
-        .player-info span { 
-            font-size: 11px; 
-            color: #94a3b8;
-        }
-
-        .player-center {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .visualizer { 
-            display: flex; 
-            align-items: flex-end; 
-            gap: 3px; 
-            height: 20px;
-        }
-        .visualizer span {
-            width: 3px; 
-            background: linear-gradient(to top, #3b82f6, #8b5cf6, #ec4899); 
-            border-radius: 2px;
-            height: 10%; 
-            transition: height 0.1s;
-        }
-        .visualizer.playing span { 
-            animation: eq-bass 0.8s infinite ease-in-out alternate; 
-        }
+        .player-info { min-width: 0; flex: 1; }
+        .player-info h4 { font-size: 14px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+        .player-info span { font-size: 11px; color: #94a3b8; }
+        .player-center { display: flex; align-items: center; gap: 12px; }
+        .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 20px; }
+        .visualizer span { width: 3px; background: linear-gradient(to top, #3b82f6, #8b5cf6, #ec4899); border-radius: 2px; height: 10%; }
+        .visualizer.playing span { animation: eq-bass 0.8s infinite ease-in-out alternate; }
         .visualizer span:nth-child(1) { animation-duration: 0.6s; }
         .visualizer span:nth-child(2) { animation-duration: 0.9s; animation-delay: 0.1s; }
         .visualizer span:nth-child(3) { animation-duration: 0.7s; animation-delay: 0.2s; }
         .visualizer span:nth-child(4) { animation-duration: 1.0s; animation-delay: 0.1s; }
         .visualizer span:nth-child(5) { animation-duration: 0.8s; animation-delay: 0.3s; }
-
-        @keyframes eq-bass {
-            0% { height: 20%; }
-            100% { height: 100%; }
-        }
-
-        .volume-control { 
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .volume-icon {
-            font-size: 16px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .volume-icon:hover { transform: scale(1.1); }
-        
-        .volume-slider {
-            width: 60px;
-            height: 3px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 2px;
-            outline: none;
-            -webkit-appearance: none;
-            cursor: pointer;
-        }
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 12px;
-            height: 12px;
-            background: #3b82f6;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
+        .volume-control { display: flex; align-items: center; gap: 6px; }
+        .volume-icon { font-size: 16px; cursor: pointer; }
+        .volume-slider { width: 60px; height: 3px; background: rgba(255,255,255,0.2); border-radius: 2px; outline: none; -webkit-appearance: none; cursor: pointer; }
+        .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; background: #3b82f6; border-radius: 50%; cursor: pointer; }
         .btn-play { 
             background: linear-gradient(135deg, #dc2626, #ef4444);
-            color: white; 
-            border: none; 
-            width: 40px; 
-            height: 40px; 
-            border-radius: 50%; 
-            font-size: 16px; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            transition: all 0.2s; 
-            font-weight: bold;
-            flex-shrink: 0;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+            color: white; border: none; width: 40px; height: 40px; border-radius: 50%; 
+            font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; 
+            font-weight: bold; flex-shrink: 0; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
         }
-        .btn-play:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5); }
-        .btn-play:active { transform: scale(0.95); }
 
-        /* RESPONSIVO */
         @media (max-width: 768px) {
-            .radio-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
-            .radio-card-header { padding: 25px 20px; }
-            .radio-card-logo { width: 70px; height: 70px; font-size: 35px; }
-            .player-bar { width: calc(100% - 20px); height: 60px; padding: 0 15px; }
-            .station-logo-container { width: 40px; height: 40px; }
-            .player-info h4 { font-size: 13px; }
-            .player-info span { font-size: 10px; }
-            .visualizer { display: none; }
-            .volume-slider { width: 50px; }
-            .btn-play { width: 36px; height: 36px; }
+            .radio-grid { grid-template-columns: 1fr; }
+            .toolbar { flex-direction: column; align-items: stretch; }
+            .toolbar select { min-width: 100%; }
+            .visualizer, .volume-slider { display: none; }
+            .player-bar { width: calc(100% - 20px); height: 60px; }
+            .header h1 { font-size: 17px; }
         }
     </style>
 </head>
@@ -359,21 +220,24 @@
             <div class="header-logo">
                 <img src="coruja.png.png" alt="Conruja">
             </div>
-            <h1>Conruja <span>Rádios</span></h1>
+            <h1>Conruja <span>ao Vivo</span></h1>
+        </div>
+        <div class="header-right">
+            <div class="live-badge">● AO VIVO</div>
+            <button class="theme-toggle" id="theme-toggle" title="Alternar tema">🌙</button>
         </div>
     </header>
 
     <main class="content">
-        <div class="search-box">
-            <label for="state-select"> Selecione seu estado:</label>
+        <div class="toolbar">
             <select id="state-select">
-                <option value="">Escolha um estado...</option>
+                <option value="">🗺️ Todas as regiões</option>
             </select>
             <input type="text" id="search-input" placeholder="🔍 Buscar rádio por nome...">
         </div>
 
         <div class="section-header">
-            <h2 class="section-title">Estações Disponíveis</h2>
+            <h2 class="section-title" id="section-title">Estações de rádio</h2>
             <div class="station-count" id="station-count">0 rádios</div>
         </div>
         <div id="radio-list" class="radio-grid">
@@ -384,7 +248,7 @@
     <footer id="radio-player" class="player-bar">
         <div class="player-left">
             <div class="station-logo-container">
-                <span></span>
+                <span>📻</span>
                 <img id="station-logo" src="" alt="Logo" class="station-logo hidden">
             </div>
             <div class="player-info">
@@ -392,24 +256,101 @@
                 <span id="station-state">--</span>
             </div>
         </div>
-        
         <div class="player-center">
             <div class="visualizer" id="visualizer">
                 <span></span><span></span><span></span><span></span><span></span>
             </div>
-
             <div class="volume-control">
                 <span class="volume-icon" id="volume-icon">🔊</span>
                 <input type="range" id="volume-slider" min="0" max="100" value="80">
             </div>
-
             <button id="btn-play" class="btn-play">▶</button>
         </div>
         <audio id="audio-element"></audio>
     </footer>
 
     <script>
+        // ============================================
+        // MODO ESCURO (igual ao site de referência)
+        // ============================================
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            themeToggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+        });
+
+        // ============================================
+        // DADOS POR ESTADO + palavras-chave ampliadas
+        // ============================================
+        const dadosEstados = {
+            'Acre': { sigla: 'ac', cidades: ['rio branco'], extras: [] },
+            'Alagoas': { sigla: 'al', cidades: ['maceió', 'arapiraca'], extras: [] },
+            'Amapá': { sigla: 'ap', cidades: ['macapá'], extras: [] },
+            'Amazonas': { sigla: 'am', cidades: ['manaus'], extras: [] },
+            'Bahia': { sigla: 'ba', cidades: ['salvador', 'feira de santana', 'vitória da conquista', 'ilhéus'], extras: [] },
+            'Ceará': { sigla: 'ce', cidades: ['fortaleza', 'juazeiro do norte', 'sobral'], extras: [] },
+            'Distrito Federal': { sigla: 'df', cidades: ['brasília'], extras: [] },
+            'Espírito Santo': { sigla: 'es', cidades: ['vitória', 'vila velha', 'serra', 'cachoeiro'], extras: [] },
+            'Goiás': { sigla: 'go', cidades: ['goiânia', 'anápolis', 'rio verde'], extras: [] },
+            'Maranhão': { sigla: 'ma', cidades: ['são luís', 'imperatriz'], extras: [] },
+            'Mato Grosso': { sigla: 'mt', cidades: ['cuiabá', 'várzea grande', 'rondonópolis'], extras: [] },
+            'Mato Grosso do Sul': { sigla: 'ms', cidades: ['campo grande', 'dourados'], extras: [] },
+            'Minas Gerais': { sigla: 'mg', cidades: ['belo horizonte', 'uberlândia', 'juiz de fora', 'montes claros'], extras: [] },
+            'Pará': { sigla: 'pa', cidades: ['belém', 'ananindeua', 'santarém'], extras: [] },
+            'Paraíba': { sigla: 'pb', cidades: ['joão pessoa', 'campina grande'], extras: [] },
+            'Paraná': { sigla: 'pr', cidades: ['curitiba', 'londrina', 'maringá', 'cascavel'], extras: [] },
+            'Pernambuco': { sigla: 'pe', cidades: ['recife', 'olinda', 'caruaru', 'petrolina'], extras: [] },
+            'Piauí': { sigla: 'pi', cidades: ['teresina', 'parnaíba'], extras: [] },
+            'Rio de Janeiro': { sigla: 'rj', cidades: ['rio de janeiro', 'niterói', 'campos', 'petrópolis'], extras: [] },
+            'Rio Grande do Norte': { 
+                sigla: 'rn', 
+                cidades: ['natal', 'mossoró', 'parnamirim', 'caicó', 'assu', 'currais novos', 'pau dos ferros', 'apodi', 'macau', 'macaíba'],
+                extras: ['zona norte', 'cabugi', 'seridó', 'serido', 'potengi', 'potiguar', 'tcm', 'vale verde', 'portalegre', 'caraúbas']
+            },
+            'Rio Grande do Sul': { sigla: 'rs', cidades: ['porto alegre', 'caxias do sul', 'pelotas', 'santa maria'], extras: [] },
+            'Rondônia': { sigla: 'ro', cidades: ['porto velho', 'ji-paraná'], extras: [] },
+            'Roraima': { sigla: 'rr', cidades: ['boa vista'], extras: [] },
+            'Santa Catarina': { sigla: 'sc', cidades: ['florianópolis', 'joinville', 'blumenau', 'chapecó'], extras: [] },
+            'São Paulo': { sigla: 'sp', cidades: ['são paulo', 'campinas', 'santos', 'ribeirão preto', 'sorocaba'], extras: [] },
+            'Sergipe': { sigla: 'se', cidades: ['aracaju'], extras: [] },
+            'Tocantins': { sigla: 'to', cidades: ['palmas', 'araguaína'], extras: [] }
+        };
+
+        // Web rádios populares (o TRUQUE do radio-ao-vivo: elas entram em todos os estados)
+        const websRadios = ['hunter', 'fictop', 'ding'];
+
+        // ============================================
+        // VALIDAÇÃO: a rádio é mesmo do estado?
+        // ============================================
+        function pertenceAoEstado(station, estado) {
+            const info = dadosEstados[estado] || { sigla: '', cidades: [], extras: [] };
+            const state = (station.state || '').toLowerCase().trim();
+            const estadoLower = estado.toLowerCase();
+
+            if (state) {
+                if (state === estadoLower) return true;
+                if (info.sigla && state === info.sigla) return true;
+                return false;
+            }
+
+            const name = (station.name || '').toLowerCase();
+            const city = (station.city || '').toLowerCase();
+            const tags = (station.tags || '').toLowerCase().split(',').map(t => t.trim());
+
+            const chaves = [...info.cidades, ...info.extras, estadoLower];
+            if (info.sigla) chaves.push(info.sigla);
+
+            return chaves.some(ch => {
+                if (tags.includes(ch)) return true;
+                if (city.includes(ch)) return true;
+                if (ch.length >= 4 && name.includes(ch)) return true;
+                return false;
+            });
+        }
+
+        // ============================================
         // ELEMENTOS
+        // ============================================
         const audioElement = document.getElementById('audio-element');
         const playerBar = document.getElementById('radio-player');
         const stationNameEl = document.getElementById('station-name');
@@ -423,6 +364,7 @@
         const radioList = document.getElementById('radio-list');
         const searchInput = document.getElementById('search-input');
         const stationCountEl = document.getElementById('station-count');
+        const sectionTitle = document.getElementById('section-title');
 
         let currentStationUuid = null;
         let currentStations = [];
@@ -433,24 +375,16 @@
             audioElement.volume = e.target.value / 100;
             updateVolumeIcon(audioElement.volume);
         });
-
-        function updateVolumeIcon(volume) {
-            if (volume === 0) volumeIcon.textContent = '🔇';
-            else if (volume < 0.5) volumeIcon.textContent = '';
-            else volumeIcon.textContent = '🔊';
+        function updateVolumeIcon(v) {
+            volumeIcon.textContent = v === 0 ? '🔇' : (v < 0.5 ? '🔉' : '🔊');
         }
-
         volumeIcon.addEventListener('click', () => {
             if (audioElement.volume > 0) {
                 audioElement.dataset.previousVolume = audioElement.volume;
-                audioElement.volume = 0;
-                volumeSlider.value = 0;
-                updateVolumeIcon(0);
+                audioElement.volume = 0; volumeSlider.value = 0; updateVolumeIcon(0);
             } else {
                 const prev = parseFloat(audioElement.dataset.previousVolume) || 0.8;
-                audioElement.volume = prev;
-                volumeSlider.value = prev * 100;
-                updateVolumeIcon(prev);
+                audioElement.volume = prev; volumeSlider.value = prev * 100; updateVolumeIcon(prev);
             }
         });
 
@@ -458,7 +392,7 @@
         function playStation(station) {
             playerBar.classList.add('visible');
             stationNameEl.textContent = station.name;
-            stationStateEl.textContent = station.state || 'Brasil';
+            stationStateEl.textContent = station.state || 'Web Rádio';
             currentStationUuid = station.stationuuid;
             
             if (station.favicon) {
@@ -486,86 +420,95 @@
 
         btnPlay.addEventListener('click', () => {
             if (audioElement.paused) {
-                audioElement.play();
-                btnPlay.textContent = '⏸';
-                visualizer.classList.add('playing');
+                audioElement.play(); btnPlay.textContent = '⏸'; visualizer.classList.add('playing');
             } else {
-                audioElement.pause();
-                btnPlay.textContent = '▶';
-                visualizer.classList.remove('playing');
+                audioElement.pause(); btnPlay.textContent = '▶'; visualizer.classList.remove('playing');
             }
         });
 
-        // ESTADOS
-        const estadosBR = [
-            'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 
-            'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão', 
-            'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 
-            'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro', 
-            'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 
-            'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins'
-        ];
-
-        estadosBR.forEach(uf => {
+        // SELECT DE ESTADOS
+        Object.keys(dadosEstados).forEach(uf => {
             const opt = document.createElement('option');
             opt.value = uf; opt.textContent = uf;
             stateSelect.appendChild(opt);
         });
 
-        // BUSCAR RÁDIOS - FILTRO RIGOROSO POR ESTADO
+        // ============================================
+        // BUSCA INTELIGENTE + WEB RÁDIOS (truque do site)
+        // ============================================
         stateSelect.addEventListener('change', async (e) => {
             const estado = e.target.value;
             if (!estado) {
-                radioList.innerHTML = '<p class="loading-text">📻 Selecione um estado</p>';
+                radioList.innerHTML = '<p class="loading-text">📻 Selecione um estado para ver as rádios</p>';
                 stationCountEl.textContent = '0 rádios';
+                sectionTitle.textContent = 'Estações de rádio';
                 return;
             }
 
-            radioList.innerHTML = '<p class="loading-text"> Buscando rádios... Aguarde</p>';
+            sectionTitle.textContent = `Rádios de ${estado}`;
+            radioList.innerHTML = '<p class="loading-text">📡 Buscando rádios locais + web rádios...</p>';
             stationCountEl.textContent = 'Buscando...';
 
             try {
-                let allStations = [];
-
-                // BUSCA 1: Filtrar TODAS as rádios do Brasil pelo estado exato
-                const urlAll = `https://de1.api.radio-browser.info/json/stations/bycountry/BR?limit=5000&order=clickcount&reverse=true`;
-                const resAll = await fetch(urlAll);
-                const stationsAll = await resAll.json();
+                const info = dadosEstados[estado] || { sigla: '', cidades: [], extras: [] };
+                const base = 'https://de1.api.radio-browser.info/json/stations/search?countrycode=BR&limit=300&order=clickcount&reverse=true';
                 
-                // Filtra APENAS pelo estado exato (case insensitive)
-                const estadoLower = estado.toLowerCase();
-                const filtered = stationsAll.filter(s => 
-                    s.state && s.state.toLowerCase() === estadoLower
-                );
-                allStations = [...filtered];
+                // Buscas locais (validadas pelo estado)
+                const urlsLocais = [ `${base}&state=${encodeURIComponent(estado)}` ];
+                if (info.sigla) urlsLocais.push(`${base}&state=${encodeURIComponent(info.sigla)}`);
+                info.cidades.slice(0, 8).forEach(c => urlsLocais.push(`${base}&name=${encodeURIComponent(c)}`));
+                info.extras.slice(0, 6).forEach(c => urlsLocais.push(`${base}&name=${encodeURIComponent(c)}`));
+                urlsLocais.push(`${base}&tag=${encodeURIComponent(estado.toLowerCase())}`);
 
-                // BUSCA 2: Buscar especificamente pelo estado (endpoint mais preciso)
-                const urlEstado = `https://de1.api.radio-browser.info/json/stations/search?countrycode=BR&state=${encodeURIComponent(estado)}&limit=500&order=clickcount&reverse=true`;
-                const resEstado = await fetch(urlEstado);
-                const stationsEstado = await resEstado.json();
-                allStations = [...allStations, ...stationsEstado];
+                // Buscas de web rádios (entram em todos os estados, igual ao site de referência)
+                const urlsWebs = websRadios.map(w => `${base}&name=${encodeURIComponent(w)}`);
 
-                // Remove duplicados e filtra só os que têm URL E estado correto
-                const uniqueStations = [];
-                const seen = new Set();
-                allStations.forEach(station => {
-                    // Verifica se o estado é exatamente o selecionado
-                    const stationState = (station.state || '').toLowerCase();
-                    if (station.url_resolved && stationState === estadoLower && !seen.has(station.name.toLowerCase())) {
-                        seen.add(station.name.toLowerCase());
-                        uniqueStations.push(station);
-                    }
+                const [resLocais, resWebs] = await Promise.all([
+                    Promise.all(urlsLocais.map(u => fetch(u).then(r => r.json()).catch(() => []))),
+                    Promise.all(urlsWebs.map(u => fetch(u).then(r => r.json()).catch(() => [])))
+                ]);
+
+                let todas = [];
+
+                // Locais: valida pelo estado
+                resLocais.forEach(lista => {
+                    if (!Array.isArray(lista)) return;
+                    lista.forEach(st => {
+                        if (st.url_resolved && pertenceAoEstado(st, estado)) {
+                            todas.push({ ...st, isWeb: false });
+                        }
+                    });
                 });
 
-                currentStations = uniqueStations;
+                // Webs: entra sem validação (são nacionais/temáticas)
+                resWebs.forEach(lista => {
+                    if (!Array.isArray(lista)) return;
+                    lista.forEach(st => {
+                        if (st.url_resolved) todas.push({ ...st, isWeb: true });
+                    });
+                });
 
-                if (uniqueStations.length === 0) {
-                    radioList.innerHTML = '<p class="loading-text"> Nenhuma rádio encontrada.</p>';
+                // Remove duplicados
+                const unicas = [];
+                const vistos = new Set();
+                todas.forEach(st => {
+                    if (vistos.has(st.stationuuid)) return;
+                    vistos.add(st.stationuuid);
+                    unicas.push(st);
+                });
+
+                // Ordena pelas mais populares
+                unicas.sort((a, b) => (b.clickcount || 0) - (a.clickcount || 0));
+
+                currentStations = unicas;
+
+                if (unicas.length === 0) {
+                    radioList.innerHTML = '<p class="loading-text">😕 Nenhuma rádio encontrada.</p>';
                     stationCountEl.textContent = '0 rádios';
                     return;
                 }
 
-                renderStations(uniqueStations);
+                renderStations(unicas);
             } catch (error) {
                 radioList.innerHTML = '<p class="loading-text" style="color:red">❌ Erro ao buscar.</p>';
                 stationCountEl.textContent = 'Erro';
@@ -580,14 +523,15 @@
                 if (currentStations.length > 0) renderStations(currentStations);
                 return;
             }
-            const filtered = currentStations.filter(s => s.name.toLowerCase().includes(term));
-            renderStations(filtered);
+            renderStations(currentStations.filter(s => s.name.toLowerCase().includes(term)));
         });
 
-        // RENDERIZAR
+        // ============================================
+        // RENDERIZAR (layout estilo radio-ao-vivo)
+        // ============================================
         function renderStations(stations) {
             radioList.innerHTML = '';
-            stationCountEl.textContent = `${stations.length} rádio${stations.length !== 1 ? 's' : ''}`;
+            stationCountEl.textContent = `${stations.length} rádios`;
             
             stations.forEach(station => {
                 const div = document.createElement('div');
@@ -595,25 +539,22 @@
                 if (station.stationuuid === currentStationUuid) div.classList.add('playing');
                 div.dataset.uuid = station.stationuuid;
                 
-                const city = station.city || 'Cidade não informada';
+                const city = station.city || (station.isWeb ? 'Web Rádio' : 'Cidade não informada');
                 const genre = station.tags ? station.tags.split(',')[0] : 'Geral';
                 
                 let logoHTML = '';
                 if (station.favicon) {
-                    logoHTML = `<img src="${station.favicon}" alt="" onerror="this.parentElement.innerHTML=''">`;
+                    logoHTML = `<img src="${station.favicon}" alt="" onerror="this.parentElement.innerHTML='📻'">`;
                 }
                 
                 div.innerHTML = `
-                    <div class="radio-card-header">
-                        <div class="radio-card-logo">
-                            ${logoHTML || '📻'}
-                        </div>
+                    <div class="radio-card-logo">${logoHTML || '📻'}</div>
+                    <div class="radio-card-info">
+                        <h3>${station.name}${station.isWeb ? '<span class="web-badge">WEB</span>' : ''}</h3>
+                        <p>📍 ${city} • ${genre}</p>
                     </div>
-                    <div class="radio-card-body">
-                        <h3>${station.name}</h3>
-                        <div class="location">📍 ${city}</div>
-                        <span class="genre">${genre}</span>
-                    </div>
+                    <div class="card-eq"><span></span><span></span><span></span></div>
+                    <div class="play-hint">▶</div>
                 `;
                 
                 div.addEventListener('click', () => playStation(station));
