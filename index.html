@@ -26,69 +26,163 @@
         .content { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
         
         .search-box {
-            background: white; padding: 20px; border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 30px;
+            background: white; padding: 20px; border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 30px;
         }
-        .search-box label { font-weight: 600; margin-bottom: 10px; display: block; color: #1e293b; }
+        .search-box label { font-weight: 600; margin-bottom: 10px; display: block; color: #1e293b; font-size: 15px; }
         .search-box select, .search-box input {
-            width: 100%; padding: 12px; font-size: 16px; border: 2px solid #e2e8f0;
-            border-radius: 8px; outline: none; margin-bottom: 10px;
+            width: 100%; padding: 14px; font-size: 16px; border: 2px solid #e2e8f0;
+            border-radius: 12px; outline: none; margin-bottom: 10px; transition: all 0.2s;
         }
-        .search-box select:focus, .search-box input:focus { border-color: #3b82f6; }
+        .search-box select:focus, .search-box input:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
 
         .section-header {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 20px; flex-wrap: wrap; gap: 10px;
+            margin-bottom: 25px; flex-wrap: wrap; gap: 10px;
         }
-        .section-title { font-size: 22px; color: #1e293b; font-weight: 700; }
+        .section-title { font-size: 24px; color: #1e293b; font-weight: 700; }
         .station-count {
-            background: white; padding: 6px 14px; border-radius: 20px;
-            font-size: 13px; font-weight: 600; color: #64748b;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white; padding: 8px 16px; border-radius: 20px;
+            font-size: 13px; font-weight: 600; box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
         }
 
         .radio-grid { 
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-            gap: 16px; margin-bottom: 40px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 20px; margin-bottom: 40px;
         }
         
+        /* CARD DESIGN MODERNO E BONITO */
         .radio-card { 
-            background: white; border-radius: 12px; overflow: hidden; cursor: pointer; 
-            transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            border: 2px solid transparent; position: relative;
+            background: white; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            position: relative;
         }
-        .radio-card:hover { transform: translateY(-5px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); border-color: #3b82f6; }
-        .radio-card.playing { border-color: #dc2626; box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2); }
+        .radio-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15); 
+            border-color: #3b82f6;
+        }
+        .radio-card.playing { 
+            border-color: #dc2626; 
+            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.2), 0 20px 40px rgba(0,0,0,0.15);
+        }
         
         .radio-card-header {
-            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-            padding: 25px 20px; text-align: center; position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 35px 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
+        .radio-card-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
         .radio-card-logo {
-            width: 70px; height: 70px; border-radius: 50%; background: white;
-            margin: 0 auto 12px; display: flex; align-items: center; justify-content: center;
-            font-size: 35px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden;
+            width: 90px; 
+            height: 90px; 
+            border-radius: 50%; 
+            background: white;
+            margin: 0 auto 15px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 40px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            border: 4px solid rgba(255,255,255,0.3);
         }
-        .radio-card-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .radio-card-logo img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            border-radius: 50%; 
+        }
         
         .radio-card.playing .radio-card-logo::after {
-            content: ''; position: absolute; top: -5px; right: -5px; width: 20px; height: 20px;
-            background: #ef4444; border-radius: 50%; animation: blink 1s infinite; border: 2px solid white;
+            content: ''; 
+            position: absolute; 
+            top: -5px; 
+            right: -5px; 
+            width: 25px; 
+            height: 25px;
+            background: linear-gradient(135deg, #ef4444, #dc2626); 
+            border-radius: 50%; 
+            animation: blink 1s infinite; 
+            z-index: 2; 
+            border: 3px solid white;
+            box-shadow: 0 2px 10px rgba(220, 38, 38, 0.4);
         }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @keyframes blink { 
+            0%, 100% { opacity: 1; transform: scale(1); } 
+            50% { opacity: 0.6; transform: scale(0.9); } 
+        }
 
-        .radio-card-body { padding: 16px; }
-        .radio-card h3 { font-size: 16px; color: #1e293b; margin-bottom: 6px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .radio-card .location { font-size: 13px; color: #64748b; margin-bottom: 10px; }
+        .radio-card-body { 
+            padding: 20px; 
+            background: white;
+        }
+        .radio-card h3 { 
+            font-size: 17px; 
+            color: #1e293b; 
+            margin-bottom: 8px; 
+            font-weight: 700; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+        }
+        .radio-card .location { 
+            font-size: 13px; 
+            color: #64748b; 
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
         .radio-card .genre {
-            display: inline-block; background: #eff6ff; color: #3b82f6; padding: 4px 10px;
-            border-radius: 12px; font-size: 11px; font-weight: 600;
+            display: inline-block; 
+            background: linear-gradient(135deg, #eff6ff, #dbeafe); 
+            color: #3b82f6; 
+            padding: 6px 14px;
+            border-radius: 12px; 
+            font-size: 12px; 
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .radio-card.playing .genre { background: #fef2f2; color: #dc2626; }
-        .loading-text { text-align: center; color: #64748b; padding: 40px 20px; font-size: 16px; }
+        .radio-card.playing .genre { 
+            background: linear-gradient(135deg, #fef2f2, #fee2e2); 
+            color: #dc2626; 
+        }
+        
+        .loading-text { 
+            text-align: center; 
+            color: #64748b; 
+            padding: 40px 20px; 
+            font-size: 16px;
+            grid-column: 1 / -1;
+        }
 
-        /* ========================================= */
-        /* PLAYER COMPACTO - ESTILO PÍLULA           */
-        /* ========================================= */
+        /* PLAYER COMPACTO */
         .player-bar { 
             position: fixed; 
             bottom: 15px; 
@@ -174,7 +268,7 @@
         }
         .visualizer span {
             width: 3px; 
-            background: linear-gradient(to top, #3b82f6, #8b5cf6); 
+            background: linear-gradient(to top, #3b82f6, #8b5cf6, #ec4899); 
             border-radius: 2px;
             height: 10%; 
             transition: height 0.1s;
@@ -238,18 +332,17 @@
             transition: all 0.2s; 
             font-weight: bold;
             flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
         }
-        .btn-play:hover { transform: scale(1.1); }
+        .btn-play:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5); }
         .btn-play:active { transform: scale(0.95); }
 
         /* RESPONSIVO */
         @media (max-width: 768px) {
-            .radio-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-            .player-bar { 
-                width: calc(100% - 20px); 
-                height: 60px;
-                padding: 0 15px;
-            }
+            .radio-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+            .radio-card-header { padding: 25px 20px; }
+            .radio-card-logo { width: 70px; height: 70px; font-size: 35px; }
+            .player-bar { width: calc(100% - 20px); height: 60px; padding: 0 15px; }
             .station-logo-container { width: 40px; height: 40px; }
             .player-info h4 { font-size: 13px; }
             .player-info span { font-size: 10px; }
@@ -264,7 +357,7 @@
     <header class="header">
         <div class="header-left">
             <div class="header-logo">
-                <img src="coruja.png" alt="Conruja">
+                <img src="coruja.png.png" alt="Conruja">
             </div>
             <h1>Conruja <span>Rádios</span></h1>
         </div>
@@ -272,9 +365,9 @@
 
     <main class="content">
         <div class="search-box">
-            <label for="state-select">📍 Estado:</label>
+            <label for="state-select"> Selecione seu estado:</label>
             <select id="state-select">
-                <option value="">Selecione...</option>
+                <option value="">Escolha um estado...</option>
             </select>
             <input type="text" id="search-input" placeholder="🔍 Buscar rádio por nome...">
         </div>
@@ -291,7 +384,7 @@
     <footer id="radio-player" class="player-bar">
         <div class="player-left">
             <div class="station-logo-container">
-                <span>📻</span>
+                <span></span>
                 <img id="station-logo" src="" alt="Logo" class="station-logo hidden">
             </div>
             <div class="player-info">
@@ -343,7 +436,7 @@
 
         function updateVolumeIcon(volume) {
             if (volume === 0) volumeIcon.textContent = '🔇';
-            else if (volume < 0.5) volumeIcon.textContent = '🔉';
+            else if (volume < 0.5) volumeIcon.textContent = '';
             else volumeIcon.textContent = '🔊';
         }
 
@@ -419,7 +512,7 @@
             stateSelect.appendChild(opt);
         });
 
-        // BUSCAR RÁDIOS - ESTRATÉGIA OTIMIZADA PARA RN
+        // BUSCAR RÁDIOS - FILTRO RIGOROSO POR ESTADO
         stateSelect.addEventListener('change', async (e) => {
             const estado = e.target.value;
             if (!estado) {
@@ -428,48 +521,37 @@
                 return;
             }
 
-            radioList.innerHTML = '<p class="loading-text">📡 Buscando rádios... Aguarde</p>';
+            radioList.innerHTML = '<p class="loading-text"> Buscando rádios... Aguarde</p>';
             stationCountEl.textContent = 'Buscando...';
 
             try {
                 let allStations = [];
 
-                // ESTRATÉGIA 1: Buscar TODAS do Brasil e filtrar
+                // BUSCA 1: Filtrar TODAS as rádios do Brasil pelo estado exato
                 const urlAll = `https://de1.api.radio-browser.info/json/stations/bycountry/BR?limit=5000&order=clickcount&reverse=true`;
                 const resAll = await fetch(urlAll);
                 const stationsAll = await resAll.json();
                 
-                // Filtra pelo estado
+                // Filtra APENAS pelo estado exato (case insensitive)
                 const estadoLower = estado.toLowerCase();
                 const filtered = stationsAll.filter(s => 
-                    s.state && s.state.toLowerCase().includes(estadoLower)
+                    s.state && s.state.toLowerCase() === estadoLower
                 );
                 allStations = [...filtered];
 
-                // ESTRATÉGIA 2: Buscar por "RN" no nome (para pegar rádios que não tem state correto)
-                if (estado === 'Rio Grande do Norte') {
-                    const urlRN = `https://de1.api.radio-browser.info/json/stations/search?countrycode=BR&name=${encodeURIComponent('RN')}&limit=500`;
-                    const resRN = await fetch(urlRN);
-                    const stationsRN = await resRN.json();
-                    allStations = [...allStations, ...stationsRN];
-                }
+                // BUSCA 2: Buscar especificamente pelo estado (endpoint mais preciso)
+                const urlEstado = `https://de1.api.radio-browser.info/json/stations/search?countrycode=BR&state=${encodeURIComponent(estado)}&limit=500&order=clickcount&reverse=true`;
+                const resEstado = await fetch(urlEstado);
+                const stationsEstado = await resEstado.json();
+                allStations = [...allStations, ...stationsEstado];
 
-                // ESTRATÉGIA 3: Buscar por cidades específicas (RN)
-                if (estado === 'Rio Grande do Norte') {
-                    const cidades = ['Natal', 'Mossoró', 'Parnamirim', 'São Gonçalo', 'Macau', 'Caicó', 'Assu', 'Pau dos Ferros'];
-                    for (const cidade of cidades) {
-                        const url = `https://de1.api.radio-browser.info/json/stations/search?countrycode=BR&name=${encodeURIComponent(cidade)}&limit=200`;
-                        const res = await fetch(url);
-                        const stations = await res.json();
-                        allStations = [...allStations, ...stations];
-                    }
-                }
-
-                // Remove duplicados e filtra só os que têm URL
+                // Remove duplicados e filtra só os que têm URL E estado correto
                 const uniqueStations = [];
                 const seen = new Set();
                 allStations.forEach(station => {
-                    if (station.url_resolved && !seen.has(station.name.toLowerCase())) {
+                    // Verifica se o estado é exatamente o selecionado
+                    const stationState = (station.state || '').toLowerCase();
+                    if (station.url_resolved && stationState === estadoLower && !seen.has(station.name.toLowerCase())) {
                         seen.add(station.name.toLowerCase());
                         uniqueStations.push(station);
                     }
@@ -478,14 +560,14 @@
                 currentStations = uniqueStations;
 
                 if (uniqueStations.length === 0) {
-                    radioList.innerHTML = '<p class="loading-text">😕 Nenhuma rádio encontrada.</p>';
+                    radioList.innerHTML = '<p class="loading-text"> Nenhuma rádio encontrada.</p>';
                     stationCountEl.textContent = '0 rádios';
                     return;
                 }
 
                 renderStations(uniqueStations);
             } catch (error) {
-                radioList.innerHTML = '<p class="loading-text" style="color:red"> Erro ao buscar.</p>';
+                radioList.innerHTML = '<p class="loading-text" style="color:red">❌ Erro ao buscar.</p>';
                 stationCountEl.textContent = 'Erro';
                 console.error(error);
             }
