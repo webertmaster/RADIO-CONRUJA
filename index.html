@@ -268,6 +268,20 @@
             letter-spacing: 0.5px;
             z-index: 3;
         }
+        .manual-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #10b981;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 3;
+        }
         .radio-card-body {
             padding: 16px;
         }
@@ -561,7 +575,7 @@
     <header class="header">
         <div class="header-left">
             <div class="header-logo">
-                <img src="coruja.png.png" alt="Conruja">
+                <img src="coruja.png" alt="Conruja">
             </div>
             <h1>Conruja <span>ao Vivo</span></h1>
         </div>
@@ -575,7 +589,7 @@
 
     <div class="search-container">
         <div class="search-box">
-            <label for="state-select"> Estado:</label>
+            <label for="state-select">📍 Estado:</label>
             <select id="state-select">
                 <option value="">Selecione...</option>
             </select>
@@ -619,7 +633,82 @@
     </footer>
 
     <script>
-        // ELEMENTOS
+        // ============================================
+        // RÁDIOS MANUAIS (Adicione as URLs reais aqui)
+        // ============================================
+        const radiosManuais = {
+            'Rio Grande do Norte': [
+                {
+                    name: "Interativa FM 94.1",
+                    city: "Natal",
+                    tags: "pop, hits, dance",
+                    url_resolved: "https://stream.interativafm.com.br/radio/8000/radio.mp3",
+                    favicon: "",
+                    stationuuid: "manual-rn-1"
+                },
+                {
+                    name: "96 FM Natal",
+                    city: "Natal",
+                    tags: "pop, rock, hits",
+                    url_resolved: "https://stream.96fm.com.br/radio.mp3",
+                    favicon: "",
+                    stationuuid: "manual-rn-2"
+                },
+                {
+                    name: "Rádio Cidade FM 103.3",
+                    city: "Natal",
+                    tags: "rock, pop rock",
+                    url_resolved: "https://stream.radiocidade.com.br/radio.mp3",
+                    favicon: "",
+                    stationuuid: "manual-rn-3"
+                },
+                {
+                    name: "Tropical FM 101.7",
+                    city: "Natal",
+                    tags: "forró, axé, popular",
+                    url_resolved: "https://stream.tropicalfm.com.br/radio.mp3",
+                    favicon: "",
+                    stationuuid: "manual-rn-4"
+                },
+                {
+                    name: "Rádio Potiguar 95.5",
+                    city: "Natal",
+                    tags: "notícias, talk, jornalismo",
+                    url_resolved: "https://stream.radiopotiguar.com.br/radio.mp3",
+                    favicon: "",
+                    stationuuid: "manual-rn-5"
+                },
+                {
+                    name: "Band FM Natal 99.1",
+                    city: "Natal",
+                    tags: "pop, rock, nacional",
+                    url_resolved: "https://stream.bandfm.com.br/natal/radio.mp3",
+                    favicon: "",
+                    stationuuid: "manual-rn-6"
+                },
+                {
+                    name: "Rádio Mossoró 96.5",
+                    city: "Mossoró",
+                    tags: "popular, regional",
+                    url_resolved: "https://stream.radiomossoro.com.br/radio.mp3",
+                    favicon: "",
+                    stationuuid: "manual-rn-7"
+                },
+                {
+                    name: "Jovem Pan FM Natal 100.9",
+                    city: "Natal",
+                    tags: "pop, jovem, hits",
+                    url_resolved: "https://stream.jovempan.com.br/natal/radio.mp3",
+                    favicon: "",
+                    stationuuid: "manual-rn-8"
+                }
+            ]
+            // Adicione mais estados aqui se quiser
+        };
+
+        // ============================================
+        // ELEMENTOS E VARIÁVEIS
+        // ============================================
         const audioElement = document.getElementById('audio-element');
         const playerBar = document.getElementById('radio-player');
         const stationNameEl = document.getElementById('station-name');
@@ -637,7 +726,9 @@
         let currentStationUuid = null;
         let currentStations = [];
 
-        // VOLUME
+        // ============================================
+        // CONTROLE DE VOLUME
+        // ============================================
         audioElement.volume = 0.8;
 
         volumeSlider.addEventListener('input', (e) => {
@@ -670,7 +761,9 @@
             }
         });
 
+        // ============================================
         // PLAY STATION
+        // ============================================
         function playStation(station) {
             playerBar.classList.add('visible');
             stationNameEl.textContent = station.name;
@@ -691,19 +784,20 @@
 
             audioElement.src = station.url_resolved;
             audioElement.play().catch(err => {
-                console.warn("Autoplay bloqueado.", err);
+                console.warn("Autoplay bloqueado ou stream offline.", err);
                 btnPlay.textContent = '▶';
                 visualizer.classList.remove('playing');
+                alert('⚠️ Esta rádio pode estar offline. Tente outra.');
             });
             
-            btnPlay.textContent = '';
+            btnPlay.textContent = '⏸';
             visualizer.classList.add('playing');
         }
 
         btnPlay.addEventListener('click', () => {
             if (audioElement.paused) {
                 audioElement.play();
-                btnPlay.textContent = '';
+                btnPlay.textContent = '⏸';
                 visualizer.classList.add('playing');
             } else {
                 audioElement.pause();
@@ -712,7 +806,9 @@
             }
         });
 
+        // ============================================
         // ESTADOS
+        // ============================================
         const estadosBR = [
             'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 
             'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão', 
@@ -729,11 +825,13 @@
             stateSelect.appendChild(opt);
         });
 
-        // BUSCAR RÁDIOS
+        // ============================================
+        // BUSCAR RÁDIOS (API + MANUAIS)
+        // ============================================
         stateSelect.addEventListener('change', async (e) => {
             const estado = e.target.value;
             if (!estado) {
-                radioList.innerHTML = '<p class="loading-text"> Selecione um estado para ver as rádios</p>';
+                radioList.innerHTML = '<p class="loading-text">📻 Selecione um estado para ver as rádios</p>';
                 stationCountEl.textContent = '0 rádios';
                 return;
             }
@@ -742,28 +840,41 @@
             stationCountEl.textContent = 'Buscando...';
 
             try {
-                // Busca TODAS as rádios (até 500)
+                let allStations = [];
+
+                // Busca da API
                 const url = `https://de1.api.radio-browser.info/json/stations/search?countrycode=BR&state=${encodeURIComponent(estado)}&limit=500&order=clickcount&reverse=true`;
                 const response = await fetch(url);
-                const stations = await response.json();
+                const apiStations = await response.json();
+                
+                allStations = [...apiStations];
 
-                currentStations = stations;
+                // Adiciona rádios manuais se existirem para este estado
+                if (radiosManuais[estado]) {
+                    const apiNames = apiStations.map(s => s.name.toLowerCase());
+                    const manualToAdd = radiosManuais[estado].filter(r => !apiNames.includes(r.name.toLowerCase()));
+                    allStations = [...manualToAdd, ...allStations]; // Manuais primeiro
+                }
 
-                if (stations.length === 0) {
-                    radioList.innerHTML = '<p class="loading-text">😕 Nenhuma rádio encontrada para este estado.</p>';
+                currentStations = allStations;
+
+                if (allStations.length === 0) {
+                    radioList.innerHTML = '<p class="loading-text">😕 Nenhuma rádio encontrada.</p>';
                     stationCountEl.textContent = '0 rádios';
                     return;
                 }
 
-                renderStations(stations);
+                renderStations(allStations);
             } catch (error) {
-                radioList.innerHTML = '<p class="loading-text" style="color:red">❌ Erro ao buscar rádios. Tente novamente.</p>';
+                radioList.innerHTML = '<p class="loading-text" style="color:red">❌ Erro ao buscar. Tente novamente.</p>';
                 stationCountEl.textContent = 'Erro';
                 console.error(error);
             }
         });
 
+        // ============================================
         // BUSCA POR NOME
+        // ============================================
         searchInput.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase().trim();
             
@@ -780,19 +891,25 @@
             renderStations(filtered);
         });
 
+        // ============================================
         // RENDERIZAR
+        // ============================================
         function renderStations(stations) {
             radioList.innerHTML = '';
             stationCountEl.textContent = `${stations.length} rádio${stations.length !== 1 ? 's' : ''}`;
             
             let workingCount = 0;
             let offlineCount = 0;
+            let manualCount = 0;
             
             stations.forEach(station => {
                 const hasUrl = station.url_resolved && station.url_resolved.trim() !== '';
+                const isManual = station.stationuuid && station.stationuuid.startsWith('manual-');
                 
                 if (hasUrl) workingCount++;
                 else offlineCount++;
+                
+                if (isManual) manualCount++;
                 
                 const div = document.createElement('div');
                 div.className = 'radio-card';
@@ -812,8 +929,9 @@
                 div.innerHTML = `
                     <div class="radio-card-header">
                         ${!hasUrl ? '<div class="offline-badge">Offline</div>' : ''}
+                        ${isManual ? '<div class="manual-badge">⭐ Manual</div>' : ''}
                         <div class="radio-card-logo">
-                            ${logoHTML}
+                            ${logoHTML || '📻'}
                         </div>
                     </div>
                     <div class="radio-card-body">
@@ -830,13 +948,17 @@
                 radioList.appendChild(div);
             });
             
-            // Adiciona info sobre offline
-            if (offlineCount > 0) {
+            // Info sobre offline e manuais
+            if (offlineCount > 0 || manualCount > 0) {
                 const info = document.createElement('p');
                 info.className = 'loading-text';
                 info.style.fontSize = '13px';
                 info.style.marginTop = '20px';
-                info.innerHTML = `ℹ️ ${workingCount} funcionando • ${offlineCount} podem estar offline`;
+                info.style.gridColumn = '1 / -1';
+                let infoText = `ℹ️ ${workingCount} funcionando`;
+                if (offlineCount > 0) infoText += ` • ${offlineCount} podem estar offline`;
+                if (manualCount > 0) infoText += ` • ${manualCount} adicionadas manualmente`;
+                info.innerHTML = infoText;
                 radioList.appendChild(info);
             }
         }
