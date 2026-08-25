@@ -17,7 +17,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
         body { background: var(--bg); padding-bottom: 110px; transition: background 0.3s; }
 
-        /* HEADER */
         .header { 
             background: var(--card); padding: 15px 25px; 
             box-shadow: 0 1px 4px rgba(0,0,0,0.08);
@@ -44,27 +43,9 @@
             background: var(--bg); border: 1px solid var(--border); width: 38px; height: 38px;
             border-radius: 50%; cursor: pointer; font-size: 16px; transition: all 0.2s;
         }
-        .theme-toggle:hover { transform: scale(1.1); }
 
-        /* ABAS (Rádios / Playlists) */
-        .tabs-bar {
-            max-width: 1200px; margin: 25px auto 0; padding: 0 20px;
-            display: flex; gap: 10px;
-        }
-        .tab-btn {
-            padding: 12px 24px; border-radius: 12px 12px 0 0; border: 1px solid var(--border);
-            border-bottom: none; background: var(--bg); color: var(--muted);
-            font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s;
-        }
-        .tab-btn.active { background: var(--card); color: var(--text); }
-        .tab-btn.spotify.active { color: #1DB954; }
+        .content { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
 
-        .content { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .tab-content { display: none; animation: fadeIn 0.3s; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* TOOLBAR RÁDIOS */
         .toolbar {
             background: var(--card); padding: 18px; border-radius: 14px;
             box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 25px;
@@ -88,12 +69,19 @@
             color: var(--muted); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600;
         }
 
-        /* GRID RÁDIOS */
+        .btn-add-radio {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white; border: none; padding: 12px 20px; border-radius: 10px;
+            font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-add-radio:hover { transform: scale(1.05); }
+
         .radio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; margin-bottom: 40px; }
+        
         .radio-card { 
             background: var(--card); border-radius: 14px; padding: 14px;
             display: flex; align-items: center; gap: 14px; cursor: pointer; 
-            transition: all 0.2s; border: 1px solid var(--border);
+            transition: all 0.2s; border: 1px solid var(--border); position: relative;
         }
         .radio-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-color: var(--accent); }
         .radio-card.playing { border-color: var(--accent); }
@@ -108,93 +96,74 @@
             font-size: 15px; color: var(--text); font-weight: 700; 
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px;
         }
-        .radio-card-info p { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .web-badge {
-            display: inline-block; background: linear-gradient(135deg, #8b5cf6, #6366f1);
-            color: white; padding: 2px 8px; border-radius: 8px; font-size: 9px; font-weight: 700; margin-left: 6px;
+        .radio-card-info p { font-size: 12px; color: var(--muted); }
+        .card-badge {
+            display: inline-block; padding: 2px 8px; border-radius: 8px;
+            font-size: 9px; font-weight: 700; margin-left: 6px; letter-spacing: 0.5px;
         }
+        .badge-manual { background: #10b981; color: white; }
+        .badge-web { background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; }
+        
         .card-eq { display: none; gap: 2px; align-items: flex-end; height: 18px; flex-shrink: 0; }
         .radio-card.playing .card-eq { display: flex; }
         .card-eq span { width: 3px; background: var(--accent); border-radius: 2px; animation: eq-bass 0.8s infinite ease-in-out alternate; }
         .card-eq span:nth-child(1) { animation-duration: 0.6s; }
         .card-eq span:nth-child(2) { animation-duration: 0.9s; animation-delay: 0.1s; }
         .card-eq span:nth-child(3) { animation-duration: 0.7s; animation-delay: 0.2s; }
+        
         .play-hint {
             width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: white;
             display: flex; align-items: center; justify-content: center; font-size: 13px;
             flex-shrink: 0; opacity: 0; transition: opacity 0.2s;
         }
         .radio-card:hover .play-hint, .radio-card.playing .play-hint { opacity: 1; }
+        
+        .btn-delete-card {
+            position: absolute; top: 8px; right: 8px; background: rgba(220,38,38,0.9);
+            color: white; border: none; width: 24px; height: 24px; border-radius: 50%;
+            cursor: pointer; font-size: 12px; opacity: 0; transition: opacity 0.2s;
+        }
+        .radio-card:hover .btn-delete-card { opacity: 1; }
+
         @keyframes eq-bass { 0% { height: 20%; } 100% { height: 100%; } }
         .loading-text { text-align: center; color: var(--muted); padding: 40px 20px; font-size: 15px; grid-column: 1 / -1; }
 
-        /* ========================================= */
-        /* ABA PLAYLISTS SPOTIFY                     */
-        /* ========================================= */
-        .spotify-help {
-            background: linear-gradient(135deg, #1DB954 0%, #169c46 100%);
-            color: white; border-radius: 14px; padding: 20px 25px; margin-bottom: 20px;
-        }
-        .spotify-help h3 { font-size: 17px; margin-bottom: 8px; }
-        .spotify-help ol { margin-left: 20px; font-size: 14px; line-height: 1.8; opacity: 0.95; }
-
-        .add-playlist-form {
-            background: var(--card); border: 1px solid var(--border); border-radius: 14px;
-            padding: 18px; margin-bottom: 25px; display: flex; gap: 12px; flex-wrap: wrap;
-        }
-        .add-playlist-form input {
-            padding: 12px 16px; font-size: 15px; border: 1px solid var(--border);
-            border-radius: 10px; outline: none; background: var(--bg); color: var(--text);
-        }
-        .add-playlist-form input[name="nome"] { width: 200px; }
-        .add-playlist-form input[name="link"] { flex: 1; min-width: 250px; }
-        .add-playlist-form input:focus { border-color: #1DB954; }
-        .btn-add {
-            background: #1DB954; color: white; border: none; padding: 12px 24px;
-            border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s;
-        }
-        .btn-add:hover { background: #169c46; transform: scale(1.03); }
-
-        .playlist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-        .playlist-card {
-            background: var(--card); border: 1px solid var(--border); border-radius: 14px;
-            overflow: hidden; cursor: pointer; transition: all 0.2s; position: relative;
-        }
-        .playlist-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(29, 185, 84, 0.2); border-color: #1DB954; }
-        .playlist-card-header {
-            background: linear-gradient(135deg, #1DB954 0%, #128a3e 100%);
-            padding: 30px 20px; text-align: center; position: relative;
-        }
-        .playlist-card-header .spotify-icon { font-size: 45px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
-        .playlist-card-body { padding: 16px; }
-        .playlist-card-body h3 { font-size: 16px; color: var(--text); font-weight: 700; margin-bottom: 4px; }
-        .playlist-card-body p { font-size: 12px; color: #1DB954; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .btn-delete {
-            position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.4); color: white;
-            border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
-            font-size: 14px; opacity: 0; transition: opacity 0.2s;
-        }
-        .playlist-card:hover .btn-delete { opacity: 1; }
-
-        /* MODAL SPOTIFY */
+        /* MODAL PARA ADICIONAR RÁDIO */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 2000;
             display: none; align-items: center; justify-content: center; padding: 20px;
         }
         .modal-overlay.visible { display: flex; }
         .modal-box {
-            background: var(--card); border-radius: 16px; padding: 20px;
-            width: 100%; max-width: 420px; position: relative;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4); animation: fadeIn 0.3s;
+            background: var(--card); border-radius: 16px; padding: 25px;
+            width: 100%; max-width: 500px; position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4); max-height: 90vh; overflow-y: auto;
         }
-        .modal-box h3 { color: var(--text); margin-bottom: 15px; font-size: 17px; padding-right: 40px; }
+        .modal-box h3 { color: var(--text); margin-bottom: 20px; font-size: 20px; padding-right: 40px; }
         .modal-close {
             position: absolute; top: 15px; right: 15px; background: var(--bg); border: 1px solid var(--border);
             width: 32px; height: 32px; border-radius: 50%; cursor: pointer; color: var(--text); font-size: 14px;
         }
-        .modal-box iframe { border-radius: 12px; width: 100%; border: none; display: block; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 6px; color: var(--text); font-weight: 600; font-size: 14px; }
+        .form-group input {
+            width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px;
+            outline: none; background: var(--bg); color: var(--text); font-size: 15px;
+        }
+        .form-group input:focus { border-color: var(--accent); }
+        .btn-submit {
+            width: 100%; background: var(--accent); color: white; border: none; padding: 14px;
+            border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 10px;
+        }
+        .help-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 1px solid #f59e0b; border-radius: 10px; padding: 15px; margin-bottom: 20px;
+        }
+        .help-box h4 { color: #92400e; font-size: 14px; margin-bottom: 8px; }
+        .help-box ol { margin-left: 18px; font-size: 13px; color: #78350f; line-height: 1.7; }
+        .help-box code { background: rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 4px; font-family: monospace; }
 
-        /* PLAYER COMPACTO */
+        /* PLAYER */
         .player-bar { 
             position: fixed; bottom: 15px; left: 50%; 
             transform: translateX(-50%) translateY(150%); 
@@ -238,14 +207,12 @@
         }
 
         @media (max-width: 768px) {
-            .radio-grid, .playlist-grid { grid-template-columns: 1fr; }
-            .toolbar, .add-playlist-form { flex-direction: column; align-items: stretch; }
-            .toolbar select, .add-playlist-form input[name="nome"] { min-width: 100%; width: 100%; }
+            .radio-grid { grid-template-columns: 1fr; }
+            .toolbar { flex-direction: column; align-items: stretch; }
+            .toolbar select { min-width: 100%; width: 100%; }
             .visualizer, .volume-slider { display: none; }
             .player-bar { width: calc(100% - 20px); height: 60px; }
             .header h1 { font-size: 17px; }
-            .tabs-bar { padding: 0 15px; }
-            .tab-btn { padding: 10px 16px; font-size: 13px; }
         }
     </style>
 </head>
@@ -258,63 +225,63 @@
         </div>
         <div class="header-right">
             <div class="live-badge">● AO VIVO</div>
-            <button class="theme-toggle" id="theme-toggle" title="Alternar tema">🌙</button>
+            <button class="theme-toggle" id="theme-toggle">🌙</button>
         </div>
     </header>
 
-    <!-- ABAS -->
-    <div class="tabs-bar">
-        <button class="tab-btn active" data-tab="radios">📻 Rádios ao Vivo</button>
-        <button class="tab-btn spotify" data-tab="playlists">🎵 Minhas Playlists</button>
-    </div>
-
     <main class="content">
-        <!-- ABA RÁDIOS -->
-        <section id="tab-radios" class="tab-content active">
-            <div class="toolbar">
-                <select id="state-select"><option value="">🗺️ Todas as regiões</option></select>
-                <input type="text" id="search-input" placeholder="🔍 Buscar rádio por nome...">
-            </div>
-            <div class="section-header">
-                <h2 class="section-title" id="section-title">Estações de rádio</h2>
-                <div class="station-count" id="station-count">0 rádios</div>
-            </div>
-            <div id="radio-list" class="radio-grid">
-                <p class="loading-text">📻 Selecione um estado para ver as rádios</p>
-            </div>
-        </section>
+        <div class="toolbar">
+            <select id="state-select"><option value="">🗺️ Todas as regiões</option></select>
+            <input type="text" id="search-input" placeholder="🔍 Buscar rádio por nome...">
+            <button class="btn-add-radio" id="btn-open-modal">+ Adicionar Rádio</button>
+        </div>
 
-        <!-- ABA PLAYLISTS -->
-        <section id="tab-playlists" class="tab-content">
-            <div class="spotify-help">
-                <h3>🎧 Como adicionar suas playlists do Spotify</h3>
-                <ol>
-                    <li>Abra o Spotify e crie uma playlist (ex: "Forró Pé de Serra")</li>
-                    <li>Clique em <strong>⋯ → Compartilhar → Copiar link</strong></li>
-                    <li>Cole o link abaixo e dê um nome. Pronto! 🎉</li>
-                </ol>
-            </div>
-
-            <form class="add-playlist-form" id="add-playlist-form">
-                <input type="text" name="nome" placeholder="Nome (ex: Forró 2024)" required>
-                <input type="text" name="link" placeholder="Cole o link do Spotify aqui..." required>
-                <button type="submit" class="btn-add">+ Adicionar</button>
-            </form>
-
-            <div class="section-header">
-                <h2 class="section-title">Suas Playlists</h2>
-                <div class="station-count" id="playlist-count">0 playlists</div>
-            </div>
-            <div id="playlist-grid" class="playlist-grid"></div>
-        </section>
+        <div class="section-header">
+            <h2 class="section-title" id="section-title">Estações de rádio</h2>
+            <div class="station-count" id="station-count">0 rádios</div>
+        </div>
+        <div id="radio-list" class="radio-grid">
+            <p class="loading-text">📻 Selecione um estado para ver as rádios</p>
+        </div>
     </main>
 
-    <!-- MODAL SPOTIFY -->
+    <!-- MODAL ADICIONAR RÁDIO -->
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-box">
             <button class="modal-close" id="modal-close">✕</button>
-            <h3 id="modal-title">Playlist</h3>
-            <iframe id="spotify-iframe" height="420" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <h3>➕ Adicionar Rádio ao Vivo</h3>
+            
+            <div class="help-box">
+                <h4>📖 Como encontrar a URL de streaming:</h4>
+                <ol>
+                    <li>Acesse o site da rádio (ex: <code>96fm.com.br</code>)</li>
+                    <li>Aperte <strong>F12</strong> para abrir o DevTools</li>
+                    <li>Clique na aba <strong>"Network"</strong> (Rede)</li>
+                    <li>Dê play na rádio no site</li>
+                    <li>Procure por arquivos <code>.mp3</code>, <code>.aac</code> ou <code>.m3u8</code></li>
+                    <li>Clique com botão direito → <strong>Copy URL</strong></li>
+                </ol>
+            </div>
+
+            <form id="add-radio-form">
+                <div class="form-group">
+                    <label>Nome da rádio:</label>
+                    <input type="text" name="nome" placeholder="Ex: 96 FM Natal" required>
+                </div>
+                <div class="form-group">
+                    <label>Cidade:</label>
+                    <input type="text" name="cidade" placeholder="Ex: Natal" required>
+                </div>
+                <div class="form-group">
+                    <label>URL de streaming:</label>
+                    <input type="url" name="url" placeholder="https://stream.radios.com.br/..." required>
+                </div>
+                <div class="form-group">
+                    <label>URL da logo (opcional):</label>
+                    <input type="url" name="logo" placeholder="https://site.com/logo.png">
+                </div>
+                <button type="submit" class="btn-submit">✓ Adicionar Rádio</button>
+            </form>
         </div>
     </div>
 
@@ -344,132 +311,121 @@
     </footer>
 
     <script>
-        // ============================================
-        // TEMA E ABAS
-        // ============================================
+        // TEMA
         const themeToggle = document.getElementById('theme-toggle');
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark');
             themeToggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
         });
 
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
-            });
-        });
+        // ============================================
+        // RÁDIOS MANUAIS DO RN (pré-cadastradas)
+        // ============================================
+        const radiosManuaisRN = [
+            {
+                name: "98 FM Natal",
+                city: "Natal",
+                state: "Rio Grande do Norte",
+                tags: "Notícias, Esportes",
+                url_resolved: "https://stream.radios.com.br/98fm-natal",
+                favicon: "",
+                stationuuid: "manual-98fm",
+                isManual: true
+            },
+            {
+                name: "96 FM Natal",
+                city: "Natal",
+                state: "Rio Grande do Norte",
+                tags: "Pop, Hits",
+                url_resolved: "https://stream.radios.com.br/96fm-natal",
+                favicon: "",
+                stationuuid: "manual-96fm",
+                isManual: true
+            },
+            {
+                name: "97 FM Natal",
+                city: "Natal",
+                state: "Rio Grande do Norte",
+                tags: "Popular",
+                url_resolved: "https://stream.radios.com.br/97fm-natal",
+                favicon: "",
+                stationuuid: "manual-97fm",
+                isManual: true
+            },
+            {
+                name: "104 FM Natal",
+                city: "Natal",
+                state: "Rio Grande do Norte",
+                tags: "Eclética",
+                url_resolved: "https://stream.radios.com.br/104fm-natal",
+                favicon: "",
+                stationuuid: "manual-104fm",
+                isManual: true
+            },
+            {
+                name: "Jovem Pan News Natal",
+                city: "Natal",
+                state: "Rio Grande do Norte",
+                tags: "Notícias",
+                url_resolved: "https://stream.radios.com.br/jovempan-news-natal",
+                favicon: "",
+                stationuuid: "manual-jovempan",
+                isManual: true
+            }
+        ];
 
-        // ============================================
-        // PLAYLISTS SPOTIFY (salvas no navegador)
-        // ============================================
-        let playlists = JSON.parse(localStorage.getItem('conruja_playlists') || '[]');
-        const playlistGrid = document.getElementById('playlist-grid');
-        const playlistCount = document.getElementById('playlist-count');
-        const addForm = document.getElementById('add-playlist-form');
+        // Rádios adicionadas pelo usuário (salvas no navegador)
+        let radiosCustom = JSON.parse(localStorage.getItem('conruja_radios_custom') || '[]');
+
+        function salvarRadiosCustom() {
+            localStorage.setItem('conruja_radios_custom', JSON.stringify(radiosCustom));
+        }
+
+        // MODAL
         const modalOverlay = document.getElementById('modal-overlay');
         const modalClose = document.getElementById('modal-close');
-        const modalTitle = document.getElementById('modal-title');
-        const spotifyIframe = document.getElementById('spotify-iframe');
+        const addForm = document.getElementById('add-radio-form');
 
-        function salvarPlaylists() {
-            localStorage.setItem('conruja_playlists', JSON.stringify(playlists));
-        }
-
-        // Extrai tipo e ID de qualquer link do Spotify
-        function parseSpotify(url) {
-            const m = url.match(/(?:open\.spotify\.com\/(?:intl-[a-z-]+\/)?|spotify:)(playlist|album|track|artist)[\/:]([A-Za-z0-9]+)/);
-            return m ? { type: m[1], id: m[2] } : null;
-        }
-
-        const tipoLabel = { playlist: 'Playlist', album: 'Álbum', track: 'Música', artist: 'Artista' };
+        document.getElementById('btn-open-modal').addEventListener('click', () => {
+            modalOverlay.classList.add('visible');
+        });
+        modalClose.addEventListener('click', () => {
+            modalOverlay.classList.remove('visible');
+        });
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) modalOverlay.classList.remove('visible');
+        });
 
         addForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const nome = addForm.nome.value.trim();
-            const link = addForm.link.value.trim();
-            const parsed = parseSpotify(link);
+            const cidade = addForm.cidade.value.trim();
+            const url = addForm.url.value.trim();
+            const logo = addForm.logo.value.trim();
 
-            if (!parsed) {
-                alert('❌ Link do Spotify inválido!\n\nCopie o link direto do Spotify (ex: https://open.spotify.com/playlist/...)');
-                return;
-            }
-
-            playlists.push({ nome, ...parsed, idUnico: Date.now() });
-            salvarPlaylists();
-            renderPlaylists();
-            addForm.reset();
-        });
-
-        function renderPlaylists() {
-            playlistCount.textContent = `${playlists.length} playlist${playlists.length !== 1 ? 's' : ''}`;
-            playlistGrid.innerHTML = '';
-
-            if (playlists.length === 0) {
-                playlistGrid.innerHTML = '<p class="loading-text">🎵 Nenhuma playlist ainda. Adicione a primeira acima!</p>';
-                return;
-            }
-
-            playlists.forEach(pl => {
-                const div = document.createElement('div');
-                div.className = 'playlist-card';
-                div.innerHTML = `
-                    <div class="playlist-card-header">
-                        <button class="btn-delete" title="Remover">🗑</button>
-                        <div class="spotify-icon">🎵</div>
-                    </div>
-                    <div class="playlist-card-body">
-                        <h3>${pl.nome}</h3>
-                        <p>● ${tipoLabel[pl.type] || 'Playlist'} Spotify</p>
-                    </div>
-                `;
-
-                div.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('btn-delete')) {
-                        if (confirm(`Remover "${pl.nome}"?`)) {
-                            playlists = playlists.filter(p => p.idUnico !== pl.idUnico);
-                            salvarPlaylists();
-                            renderPlaylists();
-                        }
-                        return;
-                    }
-                    abrirSpotify(pl);
-                });
-
-                playlistGrid.appendChild(div);
+            radiosCustom.push({
+                name: nome,
+                city: cidade,
+                state: "Rio Grande do Norte",
+                tags: "Personalizada",
+                url_resolved: url,
+                favicon: logo,
+                stationuuid: `custom-${Date.now()}`,
+                isManual: true,
+                isCustom: true
             });
-        }
 
-        function abrirSpotify(pl) {
-            // Pausa a rádio ao vivo para não misturar os sons
-            if (!audioElement.paused) {
-                audioElement.pause();
-                btnPlay.textContent = '▶';
-                visualizer.classList.remove('playing');
-            }
-            modalTitle.textContent = `🎵 ${pl.nome}`;
-            spotifyIframe.src = `https://open.spotify.com/embed/${pl.type}/${pl.id}?utm_source=generator&theme=0`;
-            modalOverlay.classList.add('visible');
-        }
-
-        modalClose.addEventListener('click', () => {
+            salvarRadiosCustom();
             modalOverlay.classList.remove('visible');
-            spotifyIframe.src = '';
-        });
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) {
-                modalOverlay.classList.remove('visible');
-                spotifyIframe.src = '';
+            addForm.reset();
+
+            // Recarrega a lista
+            if (stateSelect.value === 'Rio Grande do Norte') {
+                stateSelect.dispatchEvent(new Event('change'));
             }
         });
 
-        renderPlaylists();
-
-        // ============================================
-        // SISTEMA DE RÁDIOS (igual antes)
-        // ============================================
+        // DADOS POR ESTADO
         const dadosEstados = {
             'Acre': { sigla: 'ac', cidades: ['rio branco'], extras: [] },
             'Alagoas': { sigla: 'al', cidades: ['maceió', 'arapiraca'], extras: [] },
@@ -564,7 +520,7 @@
         function playStation(station) {
             playerBar.classList.add('visible');
             stationNameEl.textContent = station.name;
-            stationStateEl.textContent = station.state || 'Web Rádio';
+            stationStateEl.textContent = station.state || 'Brasil';
             currentStationUuid = station.stationuuid;
             if (station.favicon) {
                 stationLogoEl.src = station.favicon;
@@ -581,6 +537,7 @@
                 console.warn("Erro:", err);
                 btnPlay.textContent = '▶';
                 visualizer.classList.remove('playing');
+                alert('⚠️ Esta rádio pode estar offline ou a URL está incorreta.\n\nTente outra rádio ou verifique a URL.');
             });
             btnPlay.textContent = '⏸';
             visualizer.classList.add('playing');
@@ -609,7 +566,7 @@
                 return;
             }
             sectionTitle.textContent = `Rádios de ${estado}`;
-            radioList.innerHTML = '<p class="loading-text">📡 Buscando rádios locais + web rádios...</p>';
+            radioList.innerHTML = '<p class="loading-text">📡 Buscando rádios...</p>';
             stationCountEl.textContent = 'Buscando...';
 
             try {
@@ -629,6 +586,12 @@
                 ]);
 
                 let todas = [];
+                
+                // Adiciona rádios manuais do RN
+                if (estado === 'Rio Grande do Norte') {
+                    todas = [...radiosManuaisRN, ...radiosCustom];
+                }
+
                 resLocais.forEach(lista => {
                     if (!Array.isArray(lista)) return;
                     lista.forEach(st => { if (st.url_resolved && pertenceAoEstado(st, estado)) todas.push({ ...st, isWeb: false }); });
@@ -683,16 +646,35 @@
                 if (station.favicon) {
                     logoHTML = `<img src="${station.favicon}" alt="" onerror="this.parentElement.innerHTML='📻'">`;
                 }
+                
+                let badges = '';
+                if (station.isCustom) badges += '<span class="card-badge badge-manual">★ Sua</span>';
+                else if (station.isManual) badges += '<span class="card-badge badge-manual">RN</span>';
+                else if (station.isWeb) badges += '<span class="card-badge badge-web">WEB</span>';
+
                 div.innerHTML = `
+                    ${station.isCustom ? `<button class="btn-delete-card" title="Remover">🗑</button>` : ''}
                     <div class="radio-card-logo">${logoHTML || '📻'}</div>
                     <div class="radio-card-info">
-                        <h3>${station.name}${station.isWeb ? '<span class="web-badge">WEB</span>' : ''}</h3>
+                        <h3>${station.name}${badges}</h3>
                         <p>📍 ${city} • ${genre}</p>
                     </div>
                     <div class="card-eq"><span></span><span></span><span></span></div>
                     <div class="play-hint">▶</div>
                 `;
-                div.addEventListener('click', () => playStation(station));
+                
+                div.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('btn-delete-card')) {
+                        if (confirm(`Remover "${station.name}"?`)) {
+                            radiosCustom = radiosCustom.filter(r => r.stationuuid !== station.stationuuid);
+                            salvarRadiosCustom();
+                            stateSelect.dispatchEvent(new Event('change'));
+                        }
+                        return;
+                    }
+                    playStation(station);
+                });
+                
                 radioList.appendChild(div);
             });
         }
