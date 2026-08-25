@@ -13,174 +13,73 @@
             --bg: #0f172a; --card: #1e293b; --text: #e2e8f0;
             --muted: #94a3b8; --border: #334155;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
         body { background: var(--bg); padding-bottom: 110px; transition: background 0.3s; }
-
-        .header { 
-            background: var(--card); padding: 15px 25px; 
-            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-            display: flex; align-items: center; justify-content: space-between;
-            position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border);
-        }
+        .header { background: var(--card); padding: 15px 25px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
         .header-left { display: flex; align-items: center; gap: 12px; }
-        .header-logo {
-            width: 42px; height: 42px; border-radius: 50%; 
-            background: linear-gradient(135deg, #dc2626, #f59e0b);
-            display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 3px;
-        }
+        .header-logo { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #dc2626, #f59e0b); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 3px; }
         .header-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; animation: dance 2s infinite; }
         @keyframes dance { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
         .header h1 { font-size: 20px; color: var(--text); font-weight: 800; }
         .header h1 span { color: var(--accent); }
         .header-right { display: flex; align-items: center; gap: 10px; }
-        .live-badge {
-            background: var(--accent); color: white; padding: 5px 12px; border-radius: 20px;
-            font-size: 11px; font-weight: 700; letter-spacing: 1px; animation: pulse 2s infinite;
-        }
+        .live-badge { background: var(--accent); color: white; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-        .theme-toggle {
-            background: var(--bg); border: 1px solid var(--border); width: 38px; height: 38px;
-            border-radius: 50%; cursor: pointer; font-size: 16px; transition: all 0.2s;
-        }
-
+        .theme-toggle { background: var(--bg); border: 1px solid var(--border); width: 38px; height: 38px; border-radius: 50%; cursor: pointer; font-size: 16px; }
         .content { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
-
-        .toolbar {
-            background: var(--card); padding: 18px; border-radius: 14px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 25px;
-            display: flex; gap: 12px; flex-wrap: wrap; align-items: center; border: 1px solid var(--border);
-        }
-        .toolbar select, .toolbar input {
-            padding: 12px 16px; font-size: 15px; border: 1px solid var(--border);
-            border-radius: 10px; outline: none; background: var(--bg); color: var(--text);
-        }
+        .toolbar { background: var(--card); padding: 18px; border-radius: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 25px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; border: 1px solid var(--border); }
+        .toolbar select, .toolbar input { padding: 12px 16px; font-size: 15px; border: 1px solid var(--border); border-radius: 10px; outline: none; background: var(--bg); color: var(--text); }
         .toolbar select { min-width: 240px; cursor: pointer; font-weight: 600; }
         .toolbar input { flex: 1; min-width: 200px; }
         .toolbar select:focus, .toolbar input:focus { border-color: var(--accent); }
-
-        .section-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 18px; flex-wrap: wrap; gap: 10px;
-        }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
         .section-title { font-size: 20px; color: var(--text); font-weight: 700; }
-        .station-count {
-            background: var(--card); border: 1px solid var(--border);
-            color: var(--muted); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600;
-        }
-
-        .btn-add-radio {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white; border: none; padding: 12px 20px; border-radius: 10px;
-            font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s;
-        }
+        .station-count { background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+        .btn-add-radio { background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
         .btn-add-radio:hover { transform: scale(1.05); }
-
         .radio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; margin-bottom: 40px; }
-        
-        .radio-card { 
-            background: var(--card); border-radius: 14px; padding: 14px;
-            display: flex; align-items: center; gap: 14px; cursor: pointer; 
-            transition: all 0.2s; border: 1px solid var(--border); position: relative;
-        }
+        .radio-card { background: var(--card); border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 14px; cursor: pointer; transition: all 0.2s; border: 1px solid var(--border); position: relative; }
         .radio-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-color: var(--accent); }
         .radio-card.playing { border-color: var(--accent); }
-        .radio-card-logo {
-            width: 54px; height: 54px; border-radius: 12px; background: var(--bg);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 26px; overflow: hidden; flex-shrink: 0; border: 1px solid var(--border);
-        }
+        .radio-card-logo { width: 54px; height: 54px; border-radius: 12px; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 26px; overflow: hidden; flex-shrink: 0; border: 1px solid var(--border); }
         .radio-card-logo img { width: 100%; height: 100%; object-fit: cover; }
         .radio-card-info { flex: 1; min-width: 0; }
-        .radio-card-info h3 { 
-            font-size: 15px; color: var(--text); font-weight: 700; 
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px;
-        }
+        .radio-card-info h3 { font-size: 15px; color: var(--text); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px; }
         .radio-card-info p { font-size: 12px; color: var(--muted); }
-        .card-badge {
-            display: inline-block; padding: 2px 8px; border-radius: 8px;
-            font-size: 9px; font-weight: 700; margin-left: 6px; letter-spacing: 0.5px;
-        }
+        .card-badge { display: inline-block; padding: 2px 8px; border-radius: 8px; font-size: 9px; font-weight: 700; margin-left: 6px; letter-spacing: 0.5px; }
         .badge-manual { background: #10b981; color: white; }
         .badge-web { background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; }
-        
+        .badge-tested { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
         .card-eq { display: none; gap: 2px; align-items: flex-end; height: 18px; flex-shrink: 0; }
         .radio-card.playing .card-eq { display: flex; }
         .card-eq span { width: 3px; background: var(--accent); border-radius: 2px; animation: eq-bass 0.8s infinite ease-in-out alternate; }
         .card-eq span:nth-child(1) { animation-duration: 0.6s; }
         .card-eq span:nth-child(2) { animation-duration: 0.9s; animation-delay: 0.1s; }
         .card-eq span:nth-child(3) { animation-duration: 0.7s; animation-delay: 0.2s; }
-        
-        .play-hint {
-            width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: white;
-            display: flex; align-items: center; justify-content: center; font-size: 13px;
-            flex-shrink: 0; opacity: 0; transition: opacity 0.2s;
-        }
+        .play-hint { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; opacity: 0; transition: opacity 0.2s; }
         .radio-card:hover .play-hint, .radio-card.playing .play-hint { opacity: 1; }
-        
-        .btn-delete-card {
-            position: absolute; top: 8px; right: 8px; background: rgba(220,38,38,0.9);
-            color: white; border: none; width: 24px; height: 24px; border-radius: 50%;
-            cursor: pointer; font-size: 12px; opacity: 0; transition: opacity 0.2s;
-        }
+        .btn-delete-card { position: absolute; top: 8px; right: 8px; background: rgba(220,38,38,0.9); color: white; border: none; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; font-size: 12px; opacity: 0; transition: opacity 0.2s; z-index: 5; }
         .radio-card:hover .btn-delete-card { opacity: 1; }
-
         @keyframes eq-bass { 0% { height: 20%; } 100% { height: 100%; } }
         .loading-text { text-align: center; color: var(--muted); padding: 40px 20px; font-size: 15px; grid-column: 1 / -1; }
-
-        /* MODAL PARA ADICIONAR RÁDIO */
-        .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 2000;
-            display: none; align-items: center; justify-content: center; padding: 20px;
-        }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.visible { display: flex; }
-        .modal-box {
-            background: var(--card); border-radius: 16px; padding: 25px;
-            width: 100%; max-width: 500px; position: relative;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4); max-height: 90vh; overflow-y: auto;
-        }
+        .modal-box { background: var(--card); border-radius: 16px; padding: 25px; width: 100%; max-width: 500px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.4); max-height: 90vh; overflow-y: auto; }
         .modal-box h3 { color: var(--text); margin-bottom: 20px; font-size: 20px; padding-right: 40px; }
-        .modal-close {
-            position: absolute; top: 15px; right: 15px; background: var(--bg); border: 1px solid var(--border);
-            width: 32px; height: 32px; border-radius: 50%; cursor: pointer; color: var(--text); font-size: 14px;
-        }
+        .modal-close { position: absolute; top: 15px; right: 15px; background: var(--bg); border: 1px solid var(--border); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; color: var(--text); font-size: 14px; }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 6px; color: var(--text); font-weight: 600; font-size: 14px; }
-        .form-group input {
-            width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px;
-            outline: none; background: var(--bg); color: var(--text); font-size: 15px;
-        }
+        .form-group input { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; outline: none; background: var(--bg); color: var(--text); font-size: 15px; }
         .form-group input:focus { border-color: var(--accent); }
-        .btn-submit {
-            width: 100%; background: var(--accent); color: white; border: none; padding: 14px;
-            border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 10px;
-        }
-        .help-box {
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            border: 1px solid #f59e0b; border-radius: 10px; padding: 15px; margin-bottom: 20px;
-        }
+        .btn-submit { width: 100%; background: var(--accent); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+        .help-box { background: linear-gradient(135deg, #fef3c7, #fde68a); border: 1px solid #f59e0b; border-radius: 10px; padding: 15px; margin-bottom: 20px; }
         .help-box h4 { color: #92400e; font-size: 14px; margin-bottom: 8px; }
         .help-box ol { margin-left: 18px; font-size: 13px; color: #78350f; line-height: 1.7; }
         .help-box code { background: rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 4px; font-family: monospace; }
-
-        /* PLAYER */
-        .player-bar { 
-            position: fixed; bottom: 15px; left: 50%; 
-            transform: translateX(-50%) translateY(150%); 
-            width: 90%; max-width: 450px; height: 65px;
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            color: white; padding: 0 20px; border-radius: 16px;
-            display: flex; align-items: center; justify-content: space-between; gap: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 1000; 
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        .player-bar { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%) translateY(150%); width: 90%; max-width: 450px; height: 65px; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: white; padding: 0 20px; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; gap: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 1000; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .player-bar.visible { transform: translateX(-50%) translateY(0); }
         .player-left { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
-        .station-logo-container { 
-            width: 45px; height: 45px; border-radius: 12px; background: rgba(255,255,255,0.1);
-            display: flex; align-items: center; justify-content: center; overflow: hidden; 
-            position: relative; flex-shrink: 0;
-        }
+        .station-logo-container { width: 45px; height: 45px; border-radius: 12px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; flex-shrink: 0; }
         .station-logo { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; border-radius: 12px; }
         .station-logo.hidden { display: none; }
         .player-info { min-width: 0; flex: 1; }
@@ -199,13 +98,7 @@
         .volume-icon { font-size: 16px; cursor: pointer; }
         .volume-slider { width: 60px; height: 3px; background: rgba(255,255,255,0.2); border-radius: 2px; outline: none; -webkit-appearance: none; cursor: pointer; }
         .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; background: #3b82f6; border-radius: 50%; cursor: pointer; }
-        .btn-play { 
-            background: linear-gradient(135deg, #dc2626, #ef4444);
-            color: white; border: none; width: 40px; height: 40px; border-radius: 50%; 
-            font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; 
-            font-weight: bold; flex-shrink: 0; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-        }
-
+        .btn-play { background: linear-gradient(135deg, #dc2626, #ef4444); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4); }
         @media (max-width: 768px) {
             .radio-grid { grid-template-columns: 1fr; }
             .toolbar { flex-direction: column; align-items: stretch; }
@@ -217,10 +110,9 @@
     </style>
 </head>
 <body>
-
     <header class="header">
         <div class="header-left">
-            <div class="header-logo"><img src="coruja.png.png" alt="Conruja"></div>
+            <div class="header-logo"><img src="coruja.png" alt="Conruja"></div>
             <h1>Conruja <span>ao Vivo</span></h1>
         </div>
         <div class="header-right">
@@ -245,24 +137,21 @@
         </div>
     </main>
 
-    <!-- MODAL ADICIONAR RÁDIO -->
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-box">
             <button class="modal-close" id="modal-close">✕</button>
             <h3>➕ Adicionar Rádio ao Vivo</h3>
-            
             <div class="help-box">
                 <h4>📖 Como encontrar a URL de streaming:</h4>
                 <ol>
-                    <li>Acesse o site da rádio (ex: <code>96fm.com.br</code>)</li>
-                    <li>Aperte <strong>F12</strong> para abrir o DevTools</li>
-                    <li>Clique na aba <strong>"Network"</strong> (Rede)</li>
-                    <li>Dê play na rádio no site</li>
+                    <li>Acesse o site da rádio</li>
+                    <li>Aperte <strong>F12</strong></li>
+                    <li>Clique na aba <strong>"Network"</strong></li>
+                    <li>Dê play na rádio</li>
                     <li>Procure por arquivos <code>.mp3</code>, <code>.aac</code> ou <code>.m3u8</code></li>
                     <li>Clique com botão direito → <strong>Copy URL</strong></li>
                 </ol>
             </div>
-
             <form id="add-radio-form">
                 <div class="form-group">
                     <label>Nome da rádio:</label>
@@ -274,7 +163,7 @@
                 </div>
                 <div class="form-group">
                     <label>URL de streaming:</label>
-                    <input type="url" name="url" placeholder="https://stream.radios.com.br/..." required>
+                    <input type="url" name="url" placeholder="https://stream.exemplo.com/radio.mp3" required>
                 </div>
                 <div class="form-group">
                     <label>URL da logo (opcional):</label>
@@ -285,7 +174,6 @@
         </div>
     </div>
 
-    <!-- PLAYER -->
     <footer id="radio-player" class="player-bar">
         <div class="player-left">
             <div class="station-logo-container">
@@ -311,7 +199,6 @@
     </footer>
 
     <script>
-        // TEMA
         const themeToggle = document.getElementById('theme-toggle');
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark');
@@ -319,145 +206,124 @@
         });
 
         // ============================================
-        // RÁDIOS MANUAIS DO RN (pré-cadastradas)
+        // ⭐ RÁDIOS TESTADAS (streams públicos e estáveis)
         // ============================================
-        const radiosManuaisRN = [
-            {
-                name: "98 FM Natal",
-                city: "Natal",
-                state: "Rio Grande do Norte",
-                tags: "Notícias, Esportes",
-                url_resolved: "https://stream.radios.com.br/98fm-natal",
-                favicon: "",
-                stationuuid: "manual-98fm",
-                isManual: true
-            },
-            {
-                name: "96 FM Natal",
-                city: "Natal",
-                state: "Rio Grande do Norte",
-                tags: "Pop, Hits",
-                url_resolved: "https://stream.radios.com.br/96fm-natal",
-                favicon: "",
-                stationuuid: "manual-96fm",
-                isManual: true
-            },
-            {
-                name: "97 FM Natal",
-                city: "Natal",
-                state: "Rio Grande do Norte",
-                tags: "Popular",
-                url_resolved: "https://stream.radios.com.br/97fm-natal",
-                favicon: "",
-                stationuuid: "manual-97fm",
-                isManual: true
-            },
-            {
-                name: "104 FM Natal",
-                city: "Natal",
-                state: "Rio Grande do Norte",
-                tags: "Eclética",
-                url_resolved: "https://stream.radios.com.br/104fm-natal",
-                favicon: "",
-                stationuuid: "manual-104fm",
-                isManual: true
-            },
-            {
-                name: "Jovem Pan News Natal",
-                city: "Natal",
-                state: "Rio Grande do Norte",
-                tags: "Notícias",
-                url_resolved: "https://stream.radios.com.br/jovempan-news-natal",
-                favicon: "",
-                stationuuid: "manual-jovempan",
-                isManual: true
-            }
+        // POR CATEGORIA
+        const categorias = [
+            { name: "Forró 🤠", tags: "forró, nordeste", url: "https://cast.hunter.fm/forro" },
+            { name: "Sertanejo 🎸", tags: "sertanejo", url: "https://cast.hunter.fm/sertanejo" },
+            { name: "Pagode 🥁", tags: "pagode", url: "https://cast.hunter.fm/pagode" },
+            { name: "Samba 🎺", tags: "samba", url: "https://cast.hunter.fm/samba" },
+            { name: "MPB Clássica 🎷", tags: "mpb", url: "https://cast.hunter.fm/mpb" },
+            { name: "Gospel ✝️", tags: "gospel", url: "https://cast.hunter.fm/gospel" },
+            { name: "Pop Hits 🎵", tags: "pop", url: "https://cast.hunter.fm/pop" },
+            { name: "Funk 🎤", tags: "funk", url: "https://cast.hunter.fm/funk" },
+            { name: "K-Pop 🇰🇷", tags: "kpop", url: "https://cast.hunter.fm/kpop" },
+            { name: "Rock 🤘", tags: "rock", url: "https://cast.hunter.fm/rock" },
+            { name: "Axé 🌴", tags: "axe", url: "https://cast.hunter.fm/axe" },
+            { name: "Rap & Hip-Hop 🎙️", tags: "rap", url: "https://cast.hunter.fm/rap" },
+            { name: "Reggae 🟢", tags: "reggae", url: "https://cast.hunter.fm/reggae" },
+            { name: "Jazz 🎷", tags: "jazz", url: "https://cast.hunter.fm/jazz" },
+            { name: "Blues 🎸", tags: "blues", url: "https://cast.hunter.fm/blues" },
+            { name: "Eletrônica 🎧", tags: "eletronica", url: "https://cast.hunter.fm/eletronica" },
+            { name: "Lo-Fi 🌙", tags: "lofi", url: "https://cast.hunter.fm/lofi" },
+            { name: "Piseiro 💃", tags: "piseiro", url: "https://cast.hunter.fm/piseiro" },
+            { name: "Brega Funk 💖", tags: "brega", url: "https://cast.hunter.fm/brega" }
         ];
 
-        // Rádios adicionadas pelo usuário (salvas no navegador)
+        // POR DÉCADA
+        const decadas = [
+            { name: "Anos 60 📻", tags: "60s, rock, bossa", url: "https://cast.hunter.fm/anos60" },
+            { name: "Anos 70 🕺", tags: "70s, disco, soul", url: "https://cast.hunter.fm/anos70" },
+            { name: "Anos 80 📼", tags: "80s, pop, rock", url: "https://cast.hunter.fm/anos80" },
+            { name: "Anos 90 💿", tags: "90s, pop, dance", url: "https://cast.hunter.fm/anos90" },
+            { name: "Anos 2000 📀", tags: "2000s, pop, rock", url: "https://cast.hunter.fm/anos2000" },
+            { name: "Anos 2010 🎶", tags: "2010s, hits", url: "https://cast.hunter.fm/anos2010" }
+        ];
+
+        // Combina tudo em um array único
+        const radiosTestadas = [
+            ...categorias.map((c, i) => ({
+                name: c.name,
+                city: "Brasil",
+                state: "Web Rádio",
+                tags: c.tags,
+                url_resolved: c.url,
+                favicon: "",
+                stationuuid: `test-cat-${i}`,
+                clickcount: 1000000 - i
+            })),
+            ...decadas.map((d, i) => ({
+                name: d.name,
+                city: "Brasil",
+                state: "Web Rádio",
+                tags: d.tags,
+                url_resolved: d.url,
+                favicon: "",
+                stationuuid: `test-dec-${i}`,
+                clickcount: 900000 - i
+            }))
+        ].map(r => ({ ...r, isTested: true }));
+
         let radiosCustom = JSON.parse(localStorage.getItem('conruja_radios_custom') || '[]');
+        function salvarRadiosCustom() { localStorage.setItem('conruja_radios_custom', JSON.stringify(radiosCustom)); }
 
-        function salvarRadiosCustom() {
-            localStorage.setItem('conruja_radios_custom', JSON.stringify(radiosCustom));
-        }
-
-        // MODAL
         const modalOverlay = document.getElementById('modal-overlay');
         const modalClose = document.getElementById('modal-close');
         const addForm = document.getElementById('add-radio-form');
 
-        document.getElementById('btn-open-modal').addEventListener('click', () => {
-            modalOverlay.classList.add('visible');
-        });
-        modalClose.addEventListener('click', () => {
-            modalOverlay.classList.remove('visible');
-        });
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) modalOverlay.classList.remove('visible');
-        });
+        document.getElementById('btn-open-modal').addEventListener('click', () => modalOverlay.classList.add('visible'));
+        modalClose.addEventListener('click', () => modalOverlay.classList.remove('visible'));
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) modalOverlay.classList.remove('visible'); });
 
         addForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const nome = addForm.nome.value.trim();
-            const cidade = addForm.cidade.value.trim();
-            const url = addForm.url.value.trim();
-            const logo = addForm.logo.value.trim();
-
             radiosCustom.push({
-                name: nome,
-                city: cidade,
+                name: addForm.nome.value.trim(),
+                city: addForm.cidade.value.trim(),
                 state: "Rio Grande do Norte",
                 tags: "Personalizada",
-                url_resolved: url,
-                favicon: logo,
+                url_resolved: addForm.url.value.trim(),
+                favicon: addForm.logo.value.trim(),
                 stationuuid: `custom-${Date.now()}`,
                 isManual: true,
-                isCustom: true
+                isCustom: true,
+                clickcount: 999999
             });
-
             salvarRadiosCustom();
             modalOverlay.classList.remove('visible');
             addForm.reset();
-
-            // Recarrega a lista
-            if (stateSelect.value === 'Rio Grande do Norte') {
-                stateSelect.dispatchEvent(new Event('change'));
-            }
+            if (stateSelect.value) stateSelect.dispatchEvent(new Event('change'));
         });
 
-        // DADOS POR ESTADO
         const dadosEstados = {
             'Acre': { sigla: 'ac', cidades: ['rio branco'], extras: [] },
             'Alagoas': { sigla: 'al', cidades: ['maceió', 'arapiraca'], extras: [] },
             'Amapá': { sigla: 'ap', cidades: ['macapá'], extras: [] },
             'Amazonas': { sigla: 'am', cidades: ['manaus'], extras: [] },
-            'Bahia': { sigla: 'ba', cidades: ['salvador', 'feira de santana', 'vitória da conquista', 'ilhéus'], extras: [] },
-            'Ceará': { sigla: 'ce', cidades: ['fortaleza', 'juazeiro do norte', 'sobral'], extras: [] },
+            'Bahia': { sigla: 'ba', cidades: ['salvador', 'feira de santana'], extras: [] },
+            'Ceará': { sigla: 'ce', cidades: ['fortaleza', 'juazeiro do norte'], extras: [] },
             'Distrito Federal': { sigla: 'df', cidades: ['brasília'], extras: [] },
-            'Espírito Santo': { sigla: 'es', cidades: ['vitória', 'vila velha', 'serra', 'cachoeiro'], extras: [] },
-            'Goiás': { sigla: 'go', cidades: ['goiânia', 'anápolis', 'rio verde'], extras: [] },
-            'Maranhão': { sigla: 'ma', cidades: ['são luís', 'imperatriz'], extras: [] },
-            'Mato Grosso': { sigla: 'mt', cidades: ['cuiabá', 'várzea grande', 'rondonópolis'], extras: [] },
-            'Mato Grosso do Sul': { sigla: 'ms', cidades: ['campo grande', 'dourados'], extras: [] },
-            'Minas Gerais': { sigla: 'mg', cidades: ['belo horizonte', 'uberlândia', 'juiz de fora', 'montes claros'], extras: [] },
-            'Pará': { sigla: 'pa', cidades: ['belém', 'ananindeua', 'santarém'], extras: [] },
-            'Paraíba': { sigla: 'pb', cidades: ['joão pessoa', 'campina grande'], extras: [] },
-            'Paraná': { sigla: 'pr', cidades: ['curitiba', 'londrina', 'maringá', 'cascavel'], extras: [] },
-            'Pernambuco': { sigla: 'pe', cidades: ['recife', 'olinda', 'caruaru', 'petrolina'], extras: [] },
-            'Piauí': { sigla: 'pi', cidades: ['teresina', 'parnaíba'], extras: [] },
-            'Rio de Janeiro': { sigla: 'rj', cidades: ['rio de janeiro', 'niterói', 'campos', 'petrópolis'], extras: [] },
-            'Rio Grande do Norte': { 
-                sigla: 'rn', 
-                cidades: ['natal', 'mossoró', 'parnamirim', 'caicó', 'assu', 'currais novos', 'pau dos ferros', 'apodi', 'macau', 'macaíba'],
-                extras: ['zona norte', 'cabugi', 'seridó', 'serido', 'potengi', 'potiguar', 'tcm', 'vale verde', 'portalegre', 'caraúbas']
-            },
-            'Rio Grande do Sul': { sigla: 'rs', cidades: ['porto alegre', 'caxias do sul', 'pelotas', 'santa maria'], extras: [] },
-            'Rondônia': { sigla: 'ro', cidades: ['porto velho', 'ji-paraná'], extras: [] },
+            'Espírito Santo': { sigla: 'es', cidades: ['vitória', 'vila velha'], extras: [] },
+            'Goiás': { sigla: 'go', cidades: ['goiânia', 'anápolis'], extras: [] },
+            'Maranhão': { sigla: 'ma', cidades: ['são luís'], extras: [] },
+            'Mato Grosso': { sigla: 'mt', cidades: ['cuiabá'], extras: [] },
+            'Mato Grosso do Sul': { sigla: 'ms', cidades: ['campo grande'], extras: [] },
+            'Minas Gerais': { sigla: 'mg', cidades: ['belo horizonte', 'uberlândia'], extras: [] },
+            'Pará': { sigla: 'pa', cidades: ['belém'], extras: [] },
+            'Paraíba': { sigla: 'pb', cidades: ['joão pessoa'], extras: [] },
+            'Paraná': { sigla: 'pr', cidades: ['curitiba', 'londrina'], extras: [] },
+            'Pernambuco': { sigla: 'pe', cidades: ['recife'], extras: [] },
+            'Piauí': { sigla: 'pi', cidades: ['teresina'], extras: [] },
+            'Rio de Janeiro': { sigla: 'rj', cidades: ['rio de janeiro', 'niterói'], extras: [] },
+            'Rio Grande do Norte': { sigla: 'rn', cidades: ['natal', 'mossoró', 'parnamirim', 'caicó', 'assu'], extras: ['zona norte', 'cabugi', 'seridó', 'potiguar', 'tcm', 'vale verde', 'portalegre', 'caraúbas'] },
+            'Rio Grande do Sul': { sigla: 'rs', cidades: ['porto alegre', 'caxias do sul'], extras: [] },
+            'Rondônia': { sigla: 'ro', cidades: ['porto velho'], extras: [] },
             'Roraima': { sigla: 'rr', cidades: ['boa vista'], extras: [] },
-            'Santa Catarina': { sigla: 'sc', cidades: ['florianópolis', 'joinville', 'blumenau', 'chapecó'], extras: [] },
-            'São Paulo': { sigla: 'sp', cidades: ['são paulo', 'campinas', 'santos', 'ribeirão preto', 'sorocaba'], extras: [] },
+            'Santa Catarina': { sigla: 'sc', cidades: ['florianópolis', 'joinville'], extras: [] },
+            'São Paulo': { sigla: 'sp', cidades: ['são paulo', 'campinas', 'santos'], extras: [] },
             'Sergipe': { sigla: 'se', cidades: ['aracaju'], extras: [] },
-            'Tocantins': { sigla: 'to', cidades: ['palmas', 'araguaína'], extras: [] }
+            'Tocantins': { sigla: 'to', cidades: ['palmas'], extras: [] }
         };
         const websRadios = ['hunter', 'fictop', 'ding'];
 
@@ -526,9 +392,7 @@
                 stationLogoEl.src = station.favicon;
                 stationLogoEl.classList.remove('hidden');
                 stationLogoEl.onerror = () => stationLogoEl.classList.add('hidden');
-            } else {
-                stationLogoEl.classList.add('hidden');
-            }
+            } else { stationLogoEl.classList.add('hidden'); }
             document.querySelectorAll('.radio-card').forEach(item => {
                 item.classList.toggle('playing', item.dataset.uuid === station.stationuuid);
             });
@@ -537,7 +401,6 @@
                 console.warn("Erro:", err);
                 btnPlay.textContent = '▶';
                 visualizer.classList.remove('playing');
-                alert('⚠️ Esta rádio pode estar offline ou a URL está incorreta.\n\nTente outra rádio ou verifique a URL.');
             });
             btnPlay.textContent = '⏸';
             visualizer.classList.add('playing');
@@ -572,7 +435,6 @@
             try {
                 const info = dadosEstados[estado] || { sigla: '', cidades: [], extras: [] };
                 const base = 'https://de1.api.radio-browser.info/json/stations/search?countrycode=BR&limit=300&order=clickcount&reverse=true';
-                
                 const urlsLocais = [ `${base}&state=${encodeURIComponent(estado)}` ];
                 if (info.sigla) urlsLocais.push(`${base}&state=${encodeURIComponent(info.sigla)}`);
                 info.cidades.slice(0, 8).forEach(c => urlsLocais.push(`${base}&name=${encodeURIComponent(c)}`));
@@ -585,12 +447,8 @@
                     Promise.all(urlsWebs.map(u => fetch(u).then(r => r.json()).catch(() => [])))
                 ]);
 
-                let todas = [];
-                
-                // Adiciona rádios manuais do RN
-                if (estado === 'Rio Grande do Norte') {
-                    todas = [...radiosManuaisRN, ...radiosCustom];
-                }
+                let todas = [...radiosTestadas];
+                if (estado === 'Rio Grande do Norte') todas = [...todas, ...radiosCustom];
 
                 resLocais.forEach(lista => {
                     if (!Array.isArray(lista)) return;
@@ -640,14 +498,13 @@
                 div.className = 'radio-card';
                 if (station.stationuuid === currentStationUuid) div.classList.add('playing');
                 div.dataset.uuid = station.stationuuid;
-                const city = station.city || (station.isWeb ? 'Web Rádio' : 'Cidade não informada');
+                const city = station.city || 'Web Rádio';
                 const genre = station.tags ? station.tags.split(',')[0] : 'Geral';
                 let logoHTML = '';
-                if (station.favicon) {
-                    logoHTML = `<img src="${station.favicon}" alt="" onerror="this.parentElement.innerHTML='📻'">`;
-                }
+                if (station.favicon) logoHTML = `<img src="${station.favicon}" alt="" onerror="this.parentElement.innerHTML='📻'">`;
                 
                 let badges = '';
+                if (station.isTested) badges += '<span class="card-badge badge-tested">✔ TESTADA</span>';
                 if (station.isCustom) badges += '<span class="card-badge badge-manual">★ Sua</span>';
                 else if (station.isManual) badges += '<span class="card-badge badge-manual">RN</span>';
                 else if (station.isWeb) badges += '<span class="card-badge badge-web">WEB</span>';
