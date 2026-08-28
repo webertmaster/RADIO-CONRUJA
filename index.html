@@ -52,6 +52,40 @@
     @keyframes station-ring-spin{to{transform:rotate(360deg)}}
     @keyframes station-ring-beat{0%,100%{transform:scale(1);box-shadow:0 0 5px 1px #20b8ff66,0 0 9px 1px #675cff44}18%{transform:scale(1.09);box-shadow:0 0 10px 3px #20b8ffbb,0 0 18px 4px #675cff77}36%{transform:scale(1.025)}58%{transform:scale(1.12);box-shadow:0 0 12px 4px #fa39d599,0 0 22px 5px #20b8ff88}74%{transform:scale(1.035)}}
     @media(max-width:650px){body{padding-bottom:114px}.player-inner{height:100px;padding:7px 14px 6px;grid-template-columns:minmax(0,1fr) 46px;grid-template-rows:55px 28px;gap:4px 10px}.now{grid-column:1;grid-row:1;gap:9px}.now-logo-beat{width:48px;height:48px;flex-basis:48px;border-radius:15px}.now-logo-beat .logo{width:42px;height:42px;border-radius:12px}.controls{grid-column:2;grid-row:1}.play{width:44px;height:44px}.volume{grid-column:1/-1;grid-row:2;justify-content:center}.volume input{width:76%}.toast{bottom:112px}.now-name{font-size:14px}.now-meta{font-size:11px}}
+    /* Hero inteligente: mensagens reais, destaque automático e estado da reprodução. */
+    .hero{grid-template-columns:1fr;gap:14px;padding-top:34px}
+    .hero-card{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(310px,.75fr);gap:34px;align-items:center;min-height:358px;padding:36px 38px}
+    .hero-card:after{right:38%;bottom:-92px;font-size:290px;opacity:.55}
+    .hero-copy,.hero-live-card{position:relative;z-index:1}
+    .hero-copy-dynamic{min-height:222px;transition:opacity .24s ease,transform .24s ease}
+    .hero-copy-dynamic.is-changing{opacity:0;transform:translateY(7px)}
+    .hero h1{font-size:clamp(38px,4.6vw,58px);max-width:710px;margin-top:11px}
+    .hero-copy p{max-width:670px}
+    .hero-live-card{min-height:278px;display:flex;flex-direction:column;justify-content:center;padding:22px;border:1px solid #7ddcff2c;border-radius:24px;background:linear-gradient(145deg,#08182bd9,#101f3ae8 55%,#211f52d9);box-shadow:inset 0 1px #ffffff10,0 18px 45px #0005;overflow:hidden}
+    .hero-live-card:before{content:"";position:absolute;inset:-65% 35% 25% -35%;background:radial-gradient(circle,#20b8ff30,transparent 65%);pointer-events:none}
+    .hero-live-top,.hero-feature-main,.hero-feature-actions,.hero-feature-foot{position:relative;z-index:1}
+    .hero-live-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+    .hero-live-label{color:#7ddcff;font-size:11px;font-weight:900;letter-spacing:1.45px;text-transform:uppercase}
+    .hero-eq{height:23px;display:flex;align-items:center;gap:3px}
+    .hero-eq i{display:block;width:3px;height:7px;border-radius:4px;background:linear-gradient(#dffaff,#20b8ff 60%,#675cff);box-shadow:0 0 8px #20b8ff88;opacity:.48}
+    body.radio-playing .hero-eq i{opacity:1;animation:hero-eq-beat .72s ease-in-out infinite}
+    body.radio-playing .hero-eq i:nth-child(2){animation-delay:-.38s}body.radio-playing .hero-eq i:nth-child(3){animation-delay:-.14s}body.radio-playing .hero-eq i:nth-child(4){animation-delay:-.52s}body.radio-playing .hero-eq i:nth-child(5){animation-delay:-.25s}
+    .hero-feature-main{display:grid;grid-template-columns:82px minmax(0,1fr);gap:15px;align-items:center}
+    .hero-feature-logo{width:82px;height:82px;border-radius:21px;display:grid;place-items:center;overflow:hidden;background:linear-gradient(145deg,#184a71,#342d71);border:2px solid #ffffff22;box-shadow:0 10px 28px #0005,0 0 0 1px #20b8ff22;font-size:30px;font-weight:900}
+    .hero-feature-logo img{width:100%;height:100%;object-fit:cover;display:block}
+    body.radio-playing .hero-feature-logo{box-shadow:0 10px 28px #0005,0 0 0 2px #20b8ff88,0 0 22px #675cff66;animation:hero-logo-pulse .9s ease-in-out infinite}
+    .hero-feature-info{min-width:0}.hero-feature-info strong{display:block;font-size:19px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hero-feature-info span{display:block;color:#9db1c8;font-size:12px;line-height:1.45;margin-top:7px}
+    .hero-feature-actions{display:grid;grid-template-columns:1fr 46px;gap:9px;margin-top:20px}
+    .hero-feature-play,.hero-feature-fav{height:46px;border-radius:13px;font-weight:850;color:#fff}
+    .hero-feature-play{border:0;background:linear-gradient(135deg,var(--brand),var(--brand2));box-shadow:0 10px 24px #2688ff32}
+    .hero-feature-fav{border:1px solid #ffffff20;background:#ffffff0d;font-size:22px}.hero-feature-fav.on{color:#ff6480;border-color:#ff648055;background:#ff4d6712}
+    .hero-feature-foot{display:flex;align-items:center;gap:7px;color:#8298b1;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.75px;margin-top:13px}
+    .stats{grid-template-columns:repeat(4,minmax(0,1fr))}.stat{min-height:104px;padding:18px 22px}.stat strong{font-size:27px}
+    @keyframes hero-eq-beat{0%,100%{height:6px}45%{height:22px}70%{height:12px}}
+    @keyframes hero-logo-pulse{0%,100%{transform:scale(1)}48%{transform:scale(1.035)}}
+    @media(max-width:850px){.hero-card{grid-template-columns:1fr;gap:26px}.hero-copy-dynamic{min-height:205px}.hero-live-card{min-height:0}.hero-card:after{right:-15px;bottom:-85px}.stats{grid-template-columns:1fr 1fr}}
+    @media(max-width:650px){.hero{padding-top:20px}.hero-card{padding:26px 22px;border-radius:24px;gap:22px}.hero h1{font-size:clamp(34px,11vw,45px);line-height:1.04}.hero-copy-dynamic{min-height:226px}.hero-copy p{font-size:15px}.hero-live-card{padding:18px;border-radius:20px}.hero-feature-main{grid-template-columns:68px minmax(0,1fr)}.hero-feature-logo{width:68px;height:68px;border-radius:18px}.hero-feature-info strong{font-size:17px}.stats{gap:9px}.stat{min-height:94px;padding:15px}.stat strong{font-size:24px}}
+    @media(prefers-reduced-motion:reduce){.hero-copy-dynamic,.hero-feature-logo{transition:none!important;animation:none!important}.hero-eq i{animation:none!important}}
   </style>
 </head>
 <body>
@@ -69,10 +103,23 @@
   <main class="shell">
     <section class="hero">
       <div class="hero-card">
-        <div class="eyebrow">Rádios online do Brasil</div>
-        <h1>O Brasil inteiro tocando ao vivo.</h1>
-        <p>Encontre rádios por estado, cidade, década ou estilo musical. Escolha uma estação e continue ouvindo enquanto navega.</p>
-        <div class="hero-actions"><button class="primary" id="explore">Explorar rádios</button><button class="secondary" id="showFavs">♡ Meus favoritos</button></div>
+        <div class="hero-copy">
+          <div class="hero-copy-dynamic" id="heroCopyDynamic" aria-live="polite">
+            <div class="eyebrow" id="heroEyebrow">Rádio Coruja ao vivo</div>
+            <h1 id="heroTitle">O Brasil inteiro tocando ao vivo.</h1>
+            <p id="heroText">Encontre rádios por estado, cidade, década ou estilo musical. Escolha uma estação e continue ouvindo enquanto navega.</p>
+          </div>
+          <div class="hero-actions"><button class="primary" id="explore">Explorar rádios</button><button class="secondary" id="showFavs">♡ Meus favoritos</button></div>
+        </div>
+        <aside class="hero-live-card" id="heroLiveCard" aria-label="Rádio em destaque">
+          <div class="hero-live-top"><span class="hero-live-label" id="heroLiveLabel">Destaque agora</span><span class="hero-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></div>
+          <div class="hero-feature-main">
+            <div class="hero-feature-logo" id="heroFeatureLogo">♫</div>
+            <div class="hero-feature-info"><strong id="heroFeatureName">Escolhendo uma rádio...</strong><span id="heroFeatureMeta">Aguarde um instante</span></div>
+          </div>
+          <div class="hero-feature-actions"><button class="hero-feature-play" id="heroFeaturePlay">▶ Ouvir agora</button><button class="hero-feature-fav" id="heroFeatureFav" aria-label="Adicionar rádio em destaque aos favoritos">♡</button></div>
+          <div class="hero-feature-foot"><span class="dot"></span><span id="heroFeatureFoot">Transmissão ao vivo</span></div>
+        </aside>
       </div>
       <div class="stats">
         <div class="stat"><strong id="stationCount">—</strong><span>rádios encontradas</span></div>
@@ -168,13 +215,56 @@
     CUSTOM_STATIONS.push({stationuuid:'conruja-love-mix-uberlandia',name:'Love Mix',country:'Brasil',countrycode:'BR',state:'Minas Gerais',city:'Uberlândia',frequency:'Rádio online',tags:'anos 80,anos 90,oldies,flashback,romântica,love songs',language:'Português',bitrate:128,codec:'MP3',homepage:'https://violaviva.com.br/love',favicon:'https://static.mytuner.mobi/media/tvos_radios/074/love-mix.82d69fef.png',url:'https://centova.euroti.com.br:20067/',url_resolved:'https://centova.euroti.com.br:20067/',custom:true});
     CUSTOM_STATIONS.push({stationuuid:'conruja-bigfm-us-rap-hip-hop',name:'bigFM US Rap & Hip-Hop',country:'Alemanha',countrycode:'DE',state:'Baden-Württemberg',city:'Stuttgart',frequency:'Rádio online',tags:'r&b,rnb,rap,hip hop,hip-hop,urban,us rap,old school,new school',language:'Inglês / Alemão',bitrate:128,codec:'MP3',homepage:'https://www.bigfm.de/webradio/us-rap-hiphop',favicon:'https://station-images-prod.radio-assets.com/630/bigfmusrap.jpeg?version=08f477070acdfe80001468ef2369764b0b8713fa',url:'https://stream.bigfm.de/ushiphop/mp3-128/radiocoruja',url_resolved:'https://stream.bigfm.de/ushiphop/mp3-128/radiocoruja',custom:true});
     const $=s=>document.querySelector(s), grid=$('#grid'), country=$('#country'), state=$('#state'), city=$('#city'), search=$('#search'), audio=$('#audio');
-    let all=[],filtered=[],shown=0,current=null,activeCategory='',thematicMode=false,favorites=new Set(JSON.parse(localStorage.getItem('radioBrasilFavorites')||'[]')),favOnly=false,requestId=0;
+    let all=[],filtered=[],shown=0,current=null,activeCategory='',thematicMode=false,favorites=new Set(JSON.parse(localStorage.getItem('radioBrasilFavorites')||'[]')),favOnly=false,requestId=0,heroFeatured=null,heroFeatureIndex=0,heroMessageIndex=0,heroCycleTimer=null,heroSwapTimer=null,heroNoticeTimer=null;
     const normalize=s=>(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
     const flagFor=code=>/^[A-Z]{2}$/.test(code||'')?String.fromCodePoint(...[...code].map(c=>127397+c.charCodeAt())):'🌐';
     const regionNames=(()=>{try{return new Intl.DisplayNames(['pt-BR'],{type:'region'})}catch(e){return null}})();
     const countryName=(code,fallback='')=>regionNames?.of(code)||fallback||code;
     const escapeHTML=s=>String(s||'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
     const toast=msg=>{const e=$('#toast');e.textContent=msg;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),2600)};
+    const reducedMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    function greeting(){const h=new Date().getHours();return h<12?'Bom dia':h<18?'Boa tarde':'Boa noite'}
+    function heroMessages(){
+      const count=all.length?all.length.toLocaleString('pt-BR'):'Mais de mil',selectedState=state.value;
+      const messages=[
+        {eyebrow:`Rádio Coruja • ${greeting()}`,title:`${greeting()}! Sua trilha começa aqui.`,text:'Escolha uma estação e continue ouvindo enquanto navega pela Rádio Coruja.'},
+        {eyebrow:'Rádios disponíveis agora',title:`${count} rádios esperando por você.`,text:'Transmissões ao vivo organizadas por país, estado, cidade e qualidade de áudio.'},
+        {eyebrow:'Para todos os momentos',title:'Do forró ao R&B, encontre sua vibe.',text:'Explore décadas, estilos e rádios de diferentes lugares em poucos toques.'}
+      ];
+      if(selectedState)messages.push({eyebrow:'Explorando por região',title:`${selectedState} está tocando ao vivo.`,text:'Descubra emissoras locais e encontre novos sons perto de você.'});
+      messages.push(favorites.size?{eyebrow:'Sua coleção pessoal',title:`Você já salvou ${favorites.size} ${favorites.size===1?'rádio favorita':'rádios favoritas'}.`,text:'Abra Meus favoritos para encontrar rapidamente tudo o que você escolheu.'}:{eyebrow:'Monte sua coleção',title:'Suas rádios favoritas sempre por perto.',text:'Toque no coração de uma estação para guardá-la neste aparelho.'});
+      return messages;
+    }
+    function setHeroCopy(message,instant=false){
+      const box=$('#heroCopyDynamic'),apply=()=>{$('#heroEyebrow').textContent=message.eyebrow;$('#heroTitle').textContent=message.title;$('#heroText').textContent=message.text};
+      clearTimeout(heroSwapTimer);if(instant||reducedMotion){apply();box.classList.remove('is-changing');return}
+      box.classList.add('is-changing');heroSwapTimer=setTimeout(()=>{apply();box.classList.remove('is-changing')},210);
+    }
+    function updateHeroCopy(instant=false){
+      if(heroNoticeTimer)return;
+      if(current&&!audio.paused){setHeroCopy({eyebrow:'Agora tocando na Rádio Coruja',title:current.name||'Rádio ao vivo',text:[current.city,current.frequency,current.state,current.bitrate?`${current.bitrate} kbps`:null].filter(Boolean).join(' • ')||'Transmissão ao vivo'},instant);return}
+      const messages=heroMessages();heroMessageIndex%=messages.length;setHeroCopy(messages[heroMessageIndex],instant);
+    }
+    function featuredPool(){return CUSTOM_STATIONS.filter(browserPlayable)}
+    function updateHeroFeature(useCurrent=false){
+      const pool=featuredPool(),useLast=current&&useCurrent;let station=useLast?current:pool[heroFeatureIndex%Math.max(pool.length,1)];
+      if(!station)return;heroFeatured=station;
+      const isCurrent=current?.stationuuid===station.stationuuid,isPlaying=isCurrent&&!audio.paused;
+      $('#heroLiveLabel').textContent=isPlaying?'Agora tocando':isCurrent?'Sua última rádio':'Destaque agora';
+      $('#heroFeatureName').textContent=station.name||'Rádio ao vivo';
+      $('#heroFeatureMeta').textContent=[station.city,station.frequency,station.state].filter(Boolean).join(' • ')||station.country||'Rádio online';
+      const logo=$('#heroFeatureLogo');logo.innerHTML=station.favicon?`<img src="${escapeHTML(station.favicon)}" alt="" onerror="this.remove()">`:'♫';
+      $('#heroFeaturePlay').textContent=isPlaying?'❚❚ Pausar':isCurrent?'▶ Continuar':'▶ Ouvir agora';
+      const fav=$('#heroFeatureFav'),saved=favorites.has(station.stationuuid);fav.textContent=saved?'♥':'♡';fav.classList.toggle('on',saved);fav.setAttribute('aria-label',saved?'Remover rádio em destaque dos favoritos':'Adicionar rádio em destaque aos favoritos');
+      $('#heroFeatureFoot').textContent=isPlaying?'Transmissão tocando ao vivo':[station.codec,station.bitrate?`${station.bitrate} kbps`:null].filter(Boolean).join(' • ')||'Transmissão ao vivo';
+    }
+    function flashHeroFavorite(added,station){
+      clearTimeout(heroNoticeTimer);setHeroCopy({eyebrow:'Meus favoritos',title:added?'Rádio salva com sucesso ♥':'Rádio removida dos favoritos',text:added?`${station?.name||'A estação'} ficará disponível em Meus favoritos neste aparelho.`:'Você poderá adicioná-la novamente quando quiser.'});
+      heroNoticeTimer=setTimeout(()=>{heroNoticeTimer=null;updateHeroCopy()},3200);
+    }
+    function startHero(){
+      updateHeroCopy(true);updateHeroFeature();if(!reducedMotion)heroCycleTimer=setInterval(()=>{if(current&&!audio.paused)return;heroMessageIndex++;heroFeatureIndex++;updateHeroCopy();updateHeroFeature()},8500);
+    }
     state.innerHTML=STATES.map(([v,l])=>`<option value="${v}">${l}${v?' — '+v:''}</option>`).join('');
     state.value='Rio Grande do Norte';
     const renderChips=(el,data)=>{el.innerHTML=data.map(([id,name,terms,art,icon])=>`<button class="chip${art?' has-art':''}" data-id="${id}"${art?` style="--chip-image:url('${art}')"`:''} aria-label="Ouvir rádios de ${escapeHTML(name)}"><b>${icon||'♫'}</b><strong>${escapeHTML(name)}</strong><span>Ouvir agora</span></button>`).join('')};
@@ -215,6 +305,7 @@
       filtered=all.filter(s=>(!q||hay(s).includes(q))&&(!min||Number(s.bitrate)>=min)&&(!cityTerm||hay(s).includes(cityTerm))&&(!terms.length||thematicMode||terms.some(t=>hay(s).includes(t)))&&(!favOnly||favorites.has(s.stationuuid)));
       shown=0;grid.innerHTML='';renderMore();$('#stationCount').textContent=filtered.length.toLocaleString('pt-BR');$('#onlineCount').textContent=all.length.toLocaleString('pt-BR');$('#status').textContent=`${filtered.length} resultado${filtered.length===1?'':'s'}`;$('#favCount').textContent=favorites.size;
       const category=[...DECADES,...GENRES].find(x=>x[0]===activeCategory);$('#resultTitle').textContent=favOnly?'Meus favoritos':category?category[1]:'Rádios ao vivo';$('#resultLabel').textContent=thematicMode?`Rádios temáticas • ${selectedCountryName()}`:country.value==='BR'&&state.value?(STATES.find(x=>x[0]===state.value)?.[1]||state.value):selectedCountryName();
+      updateHeroCopy(true);
     }
     function renderMore(){
       const batch=filtered.slice(shown,shown+24);if(!filtered.length){grid.innerHTML='<div class="empty">Nenhuma rádio encontrada com esses filtros. Tente outra categoria ou limpe a busca.</div>';$('#more').classList.add('hidden');return}
@@ -222,12 +313,12 @@
     }
     function card(s){const id=escapeHTML(s.stationuuid),name=escapeHTML(s.name||'Rádio sem nome'),meta=escapeHTML([s.city,s.frequency,s.state,(s.bitrate?`${s.bitrate} kbps`:''),s.codec].filter(Boolean).join(' • ')),letter=escapeHTML((s.name||'R')[0].toUpperCase());return `<article class="station" data-play="${id}"><div class="logo">${s.favicon?`<img src="${escapeHTML(s.favicon)}" alt="" loading="lazy" onerror="this.remove()">`:letter}</div><div class="station-info"><div class="station-name" title="${name}">${name}</div><div class="station-meta">${meta||'Brasil • Rádio online'}</div><div class="live"><span class="dot"></span>Ao vivo</div></div><button class="fav ${favorites.has(s.stationuuid)?'on':''}" data-fav="${id}" aria-label="Favoritar">${favorites.has(s.stationuuid)?'♥':'♡'}</button></article>`}
     function playStation(s){
-      current=s;$('.player').classList.add('buffering');audio.src=s.url_resolved||s.url;audio.play().then(()=>setPlaying(true)).catch(()=>{setPlaying(false);toast('Esta rádio não permitiu a reprodução. Tente outra.')});
+      current=s;$('.player').classList.add('buffering');updateHeroFeature(true);setHeroCopy({eyebrow:'Conectando à transmissão',title:s.name||'Rádio ao vivo',text:'Aguarde um instante enquanto preparamos o áudio ao vivo.'});audio.src=s.url_resolved||s.url;audio.play().then(()=>setPlaying(true)).catch(()=>{setPlaying(false);toast('Esta rádio não permitiu a reprodução. Tente outra.')});
       $('#nowName').textContent=s.name||'Rádio ao vivo';$('#nowMeta').textContent=[s.city,s.frequency,s.state,s.bitrate?`${s.bitrate} kbps`:null].filter(Boolean).join(' • ')||'Brasil';const l=$('#nowLogo');l.innerHTML=s.favicon?`<img src="${escapeHTML(s.favicon)}" alt="" onerror="this.remove()">`:'♫';
       try{navigator.mediaSession.metadata=new MediaMetadata({title:s.name||'Rádio ao vivo',artist:s.state||'Rádio Brasil',artwork:s.favicon?[{src:s.favicon}]:[]})}catch(e){}
     }
-    function setPlaying(on){$('#play').textContent=on?'❚❚':'▶';$('#play').setAttribute('aria-label',on?'Pausar':'Reproduzir');$('.player').classList.toggle('playing',on);document.body.classList.toggle('radio-playing',on);if(on)$('.player').classList.remove('buffering')}
-    function toggleFav(id){favorites.has(id)?favorites.delete(id):favorites.add(id);localStorage.setItem('radioBrasilFavorites',JSON.stringify([...favorites]));$('#favCount').textContent=favorites.size;document.querySelectorAll(`[data-fav="${CSS.escape(id)}"]`).forEach(b=>{b.classList.toggle('on',favorites.has(id));b.textContent=favorites.has(id)?'♥':'♡'});if(favOnly)applyFilters();toast(favorites.has(id)?'Adicionada aos favoritos':'Removida dos favoritos')}
+    function setPlaying(on){$('#play').textContent=on?'❚❚':'▶';$('#play').setAttribute('aria-label',on?'Pausar':'Reproduzir');$('.player').classList.toggle('playing',on);document.body.classList.toggle('radio-playing',on);if(on)$('.player').classList.remove('buffering');updateHeroFeature(Boolean(current));updateHeroCopy()}
+    function toggleFav(id){const added=!favorites.has(id),station=all.find(s=>s.stationuuid===id)||CUSTOM_STATIONS.find(s=>s.stationuuid===id);added?favorites.add(id):favorites.delete(id);localStorage.setItem('radioBrasilFavorites',JSON.stringify([...favorites]));$('#favCount').textContent=favorites.size;document.querySelectorAll(`[data-fav="${CSS.escape(id)}"]`).forEach(b=>{b.classList.toggle('on',added);b.textContent=added?'♥':'♡'});updateHeroFeature(current?.stationuuid===heroFeatured?.stationuuid);if(favOnly)applyFilters();toast(added?'Adicionada aos favoritos':'Removida dos favoritos');flashHeroFavorite(added,station)}
     grid.addEventListener('click',e=>{const f=e.target.closest('[data-fav]');if(f){e.stopPropagation();toggleFav(f.dataset.fav);return}const c=e.target.closest('[data-play]');if(c){const s=all.find(x=>x.stationuuid===c.dataset.play);if(s)playStation(s)}});
     document.addEventListener('click',e=>{const chip=e.target.closest('.chip');if(!chip)return;const id=chip.dataset.id;if(activeCategory===id&&thematicMode){activeCategory='';thematicMode=false;document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));loadStations()}else{document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('active',x.dataset.id===id));loadCategory(id)}$('#results').scrollIntoView({behavior:'smooth'})});
     country.addEventListener('change',()=>{const br=country.value==='BR';state.disabled=!br;city.disabled=!br;if(!br){state.value='';city.value='';$('#regionCount').textContent='1';$('#regionLabel').textContent='país selecionado'}else{$('#regionCount').textContent='27';$('#regionLabel').textContent='estados e DF'}activeCategory='';favOnly=false;document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));loadStations()});
@@ -236,10 +327,13 @@
     $('#clearSearch').onclick=()=>{search.value='';$('#clearSearch').classList.add('hidden');applyFilters();search.focus()};
     $('#reset').onclick=()=>{search.value='';city.value='';$('#quality').value='0';activeCategory='';thematicMode=false;favOnly=false;document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));loadStations()};
     $('#explore').onclick=()=>$('#filters').scrollIntoView({behavior:'smooth'});
+    $('#heroFeaturePlay').onclick=()=>{const s=heroFeatured;if(!s){toast('Aguarde a rádio em destaque carregar');return}if(current?.stationuuid===s.stationuuid&&!audio.paused){audio.pause();return}if(current?.stationuuid===s.stationuuid&&audio.src){audio.play().then(()=>setPlaying(true)).catch(()=>toast('Não foi possível reproduzir esta rádio'))}else playStation(s)};
+    $('#heroFeatureFav').onclick=()=>{if(heroFeatured)toggleFav(heroFeatured.stationuuid)};
     $('#showFavs').onclick=()=>{favOnly=!favOnly;activeCategory='';thematicMode=false;document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));if(favOnly)applyFilters();else loadStations();$('#results').scrollIntoView({behavior:'smooth'})};
     $('#more').onclick=renderMore;$('#play').onclick=()=>{if(!current){toast('Escolha uma rádio primeiro');return}if(audio.paused)audio.play().then(()=>setPlaying(true)).catch(()=>toast('Não foi possível reproduzir esta rádio'));else{audio.pause();setPlaying(false)}};
     $('#volume').oninput=e=>audio.volume=Number(e.target.value);audio.volume=.8;audio.addEventListener('waiting',()=>{$('.player').classList.add('buffering');$('#nowMeta').textContent='Conectando à transmissão...'});audio.addEventListener('playing',()=>{$('#nowMeta').textContent=[current?.state,current?.bitrate?`${current.bitrate} kbps`:null].filter(Boolean).join(' • ')||'Ao vivo';setPlaying(true)});audio.addEventListener('pause',()=>setPlaying(false));audio.addEventListener('error',()=>{$('.player').classList.remove('buffering');setPlaying(false);toast('Transmissão indisponível no momento')});
     try{navigator.mediaSession.setActionHandler('play',()=>audio.play());navigator.mediaSession.setActionHandler('pause',()=>audio.pause())}catch(e){}
+    startHero();
     loadCountries().finally(loadStations);
   })();
   </script>
